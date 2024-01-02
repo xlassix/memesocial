@@ -1,0 +1,23 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model files {
+  fileId    String   @id
+  title     String
+  summary   String   @db.Text
+  tags      String
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  @@fulltext([title, tags, summary])
+}

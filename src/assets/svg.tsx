@@ -12,6 +12,57 @@ export const World = (props: any) => {
     </Icon>
   );
 };
+
+export const Picture = (props: any) => {
+  return (
+    <svg
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 83 83"
+      {...props}
+    >
+      <g clipPath="url(#picture)">
+        <path
+          d="M81.7 41.8 35.1 14.9c-.8-.5-1.8-.2-2.2.6L11.1 53.1c-.5.8-.2 1.8.6 2.2l46.6 26.9c.8.5 1.8.2 2.2-.6L82.3 44c.4-.8.2-1.7-.6-2.2Z"
+          fill="#DFE1E0"
+        />
+        <path
+          d="m45.6 50.5 21.9-5.3L70 56.3l7.2-12.5-41.6-24-13 22.4 19.8-2.1 3.2 10.4Z"
+          fill="#43B763"
+        />
+        <path
+          d="m34.2 46 4.1-2.8-1.6 4.3 3.4-3.3.9 3.1.6-3 2.9 2.7-2.1-6.9-10.3 1.1 2.7.7-.6 4.1Zm26.3 6 4-2.4-.4 3.7 2.6-1.9 1.4 4.9 1.2-3.1-1.8-8L56 48l6.6.4-2.1 3.6Z"
+          fill="#DFE1E0"
+        />
+        <path
+          d="m69.3 53.2-1.2 3.1-1.4-4.9-2.6 1.9.4-3.7-4 2.4 2.1-3.6L56 48l-10.4 2.5-1.1-3.5-2.9-2.7-.6 3-.9-3.1-3.4 3.3 1.6-4.3-4.1 2.8.6-4.1-2.7-.7-9.5 1-3.6 6.3 41.6 24L70 56.3l-.7-3.1Z"
+          fill="#5993CE"
+        />
+        <path
+          d="M68.5 5.3 6.4.5c-1-.1-1.9.7-2 1.7L.5 52.4c-.1 1 .7 1.9 1.7 2l62.1 4.8c1 .1 1.9-.7 2-1.7l3.9-50.2c.1-1-.6-1.9-1.7-2Z"
+          fill="#EFF4F5"
+        />
+        <path
+          d="m35.2 32.4 20.2-16.5 8.1 10.4 1.3-16.6L9.4 5.4 7.1 35.3l19.6-12.2 8.5 9.3Z"
+          fill="#5993CE"
+        />
+        <path
+          d="m21 33.5 2.9-5.1.5 5.4 2-5.2 2.4 2.9-.9-3.5 4.4 1.3-5.6-6.2-10.2 6.4 3.1-.6 1.4 4.6Zm30.5-7 3-4.5 1.4 4.1 1.7-3.3 4 4.5-.3-3.9-5.9-7.5-10.6 8.7 7.1-2.8-.4 4.7Z"
+          fill="#DFE1E0"
+        />
+        <path
+          d="m61.3 23.4.3 3.9-4-4.5-1.7 3.3-1.4-4.1-3 4.5.4-4.7-7.1 2.8-9.6 7.8-2.9-3.1-4.4-1.3.9 3.5-2.4-2.9-2 5.2-.5-5.4-2.9 5.1-1.4-4.6-3.1.6-9.4 5.8-.7 8.3 55.5 4.3 1.6-21.6-2.2-2.9Z"
+          fill="#505251"
+        />
+      </g>
+      <defs>
+        <clipPath id="picture">
+          <path fill="#fff" d="M0 0h83v83H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
 export const LogoSVG = (props: any) => {
   return (
     <svg
@@ -22,11 +73,11 @@ export const LogoSVG = (props: any) => {
     >
       <g filter="url(#a)">
         <rect width="40" height="40" rx="20" fill="#6E3FF3" />
-        <rect width="40" height="40" rx="20" fill="#fff" fill-opacity=".1" />
+        <rect width="40" height="40" rx="20" fill="#fff" fillOpacity=".1" />
         <path
           d="m21.31 5.06 2.1.56-2.13 7.93a6.92 6.92 0 0 0-2.24-.05l2.27-8.44Zm8.75 4.23-5.7 5.69a6.85 6.85 0 0 0-1.95-1.12l6.11-6.1 1.54 1.53ZM17.78 13.8c-.71.25-1.38.6-1.97 1.06l-2.23-8.3 2.1-.57 2.1 7.81Zm-6.3 18.54-1.54-1.53 5.49-5.47c.55.5 1.18.9 1.87 1.2l-5.82 5.8Zm12.84 1.77-2-7.4a6.85 6.85 0 0 0 1.97-1.1l2.13 7.94-2.1.56Zm9.8-18.36-7.7 2.05a6.82 6.82 0 0 0-1.16-1.93l8.29-2.21.56 2.09Zm-7.35 3.33 8.17 2.18-.56 2.1-7.6-2.03a6.87 6.87 0 0 0-.01-2.25ZM5.89 24.36l7.59-2.03a6.8 6.8 0 0 0 1 1.98l-8.03 2.14-.56-2.1Zm10.8 10.02 1.99-7.41a6.9 6.9 0 0 0 2.23.07l-2.12 7.9-2.1-.56Zm14.1-4.3-5.48-5.47c.47-.58.86-1.23 1.13-1.94l5.9 5.88-1.55 1.53ZM13.2 21.02l-8.14-2.18.56-2.1 7.7 2.06a6.84 6.84 0 0 0-.12 2.22Zm.5-3.44-6.03-6.02 1.54-1.53 5.7 5.68c-.5.55-.9 1.18-1.2 1.87Z"
           fill="url(#b)"
-          fill-opacity=".88"
+          fillOpacity=".88"
           stroke="url(#c)"
         />
       </g>
@@ -43,8 +94,8 @@ export const LogoSVG = (props: any) => {
           y2="51.62"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset=".31" stop-color="#fff" />
-          <stop offset="1" stop-color="#fff" stop-opacity="0" />
+          <stop offset=".31" stopColor="#fff" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="c"
@@ -54,8 +105,8 @@ export const LogoSVG = (props: any) => {
           y2="3.19"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#fff" />
-          <stop offset="1" stop-color="#fff" stop-opacity="0" />
+          <stop stopColor="#fff" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
         </linearGradient>
         <filter
           id="a"
@@ -64,9 +115,9 @@ export const LogoSVG = (props: any) => {
           width="40"
           height="44"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feColorMatrix
             in="SourceAlpha"

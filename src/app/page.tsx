@@ -1,6 +1,6 @@
 // app/page.tsx
 'use client';
-import Nav from '@/components/Nav';
+import Nav from '@/components/nav';
 import { Link } from '@chakra-ui/next-js';
 import { Box } from '@chakra-ui/react';
 

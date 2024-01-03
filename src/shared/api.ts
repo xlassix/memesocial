@@ -17,8 +17,8 @@ export default function apiHandler(url: string, data?: any, token?: string) {
   });
 }
 
-export const login = async (body: any) => {
-  return await apiHandler('/account/login', body);
+export const uploadDataAPI = async (body: any) => {
+  return await apiHandler('/ai', body);
 };
 
 export const register = async (body: any) => {

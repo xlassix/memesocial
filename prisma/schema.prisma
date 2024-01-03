@@ -15,7 +15,9 @@ model files {
   fileId    String   @id
   title     String
   summary   String   @db.Text
-  tags      String
+  tags      String   
+  type      String
+  url       String   
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
 

@@ -144,7 +144,7 @@ export async function POST(req: Request) {
               content: [
                 {
                   type: 'text',
-                  text: `1. Describe this image as best as you can for indexing system of image? 2. extract any useful tags or urban dictionary like words from the description provided "${processed.description}",add characters like race,gender,color,age group,facial expression and so on NB: Append just the Keywords or tags(DON'T EXPLAIN IT)`,
+                  text: `1. Describe this image as best as you can for indexing system of image? 2. extract any useful tags or urban dictionary like words from the description provided "${processed.description}",add characters like race,gender,color,age group,facial expressions and so on NB: Append just the Keywords or tags(DON'T EXPLAIN IT)`,
                 },
                 {
                   type: 'image_url',
@@ -166,7 +166,7 @@ export async function POST(req: Request) {
               content: [
                 {
                   type: 'text',
-                  text: `1. Describe series of frames from a video as best as you can for indexing system of videos? 2. extract any useful tags or urban dictionary like words from the description provided "${processed.description}",add characters like race,gender,color,age group,facial expression and so on NB: Append just the Keywords or tags(DON'T EXPLAIN IT)`,
+                  text: `1. Describe series of frames from a video as best as you can for indexing system of videos? 2. extract any useful tags or urban dictionary like words from the description provided "${processed.description}",add characters like race,gender,color,age group,facial expressions and so on NB: Append just the Keywords or tags(DON'T EXPLAIN IT)`,
                 },
                 ...processed.extraDetails.map((e) => ({
                   type: 'image_url',

@@ -134,107 +134,113 @@ export async function POST(req: Request) {
       fileId: processed.fileURL,
     },
   });
-  if (!exists) {
-    const payload = processed.fileType.startsWith('image')
-      ? {
-          model: 'gpt-4-vision-preview',
-          messages: [
-            {
-              role: 'user',
-              content: [
-                {
-                  type: 'text',
-                  text: `1. Describe this image as best as you can for indexing system of image? 2. extract any useful tags or urban dictionary like words from the description provided "${processed.description}",add characters like race,gender,color,age group,facial expressions and so on NB: Append just the Keywords or tags(DON'T EXPLAIN IT)`,
-                },
-                {
-                  type: 'image_url',
-                  image_url: {
-                    url: `https://gateway.lighthouse.storage/ipfs/${processed.fileURL}?s=40&v=4`,
-                    detail: 'low',
+  try {
+    if (!exists) {
+      const payload = processed.fileType.startsWith('image')
+        ? {
+            model: 'gpt-4-vision-preview',
+            messages: [
+              {
+                role: 'user',
+                content: [
+                  {
+                    type: 'text',
+                    text: `1. Describe this image as best as you can for indexing system of image? 2. extract any useful tags or urban dictionary like words from the description provided "${processed.description}",add characters like race,gender,color,age group,facial expressions and so on NB: Append just the Keywords or tags(DON'T EXPLAIN IT)`,
                   },
-                },
-              ],
-            },
-          ],
-          max_tokens: 300,
-        }
-      : {
-          model: 'gpt-4-vision-preview',
-          messages: [
-            {
-              role: 'user',
-              content: [
-                {
-                  type: 'text',
-                  text: `1. Describe series of frames from a video as best as you can for indexing system of videos? 2. extract any useful tags or urban dictionary like words from the description provided "${processed.description}",add characters like race,gender,color,age group,facial expressions and so on NB: Append just the Keywords or tags(DON'T EXPLAIN IT)`,
-                },
-                ...processed.extraDetails.map((e) => ({
-                  type: 'image_url',
-                  image_url: {
-                    url: e,
-                    detail: 'low',
+                  {
+                    type: 'image_url',
+                    image_url: {
+                      url: `https://gateway.lighthouse.storage/ipfs/${processed.fileURL}?s=40&v=4`,
+                      detail: 'low',
+                    },
                   },
-                })),
-              ],
-            },
-          ],
-          max_tokens: 1000,
-        };
-
-    try {
-      const data = (
-        await axios.post(
-          'https://api.openai.com/v1/chat/completions',
-          payload,
-          {
-            headers,
+                ],
+              },
+            ],
+            max_tokens: 300,
           }
-        )
-      ).data as IChatCompletion;
+        : {
+            model: 'gpt-4-vision-preview',
+            messages: [
+              {
+                role: 'user',
+                content: [
+                  {
+                    type: 'text',
+                    text: `1. Describe series of frames from a video as best as you can for indexing system of videos? 2. extract any useful tags or urban dictionary like words from the description provided "${processed.description}",add characters like race,gender,color,age group,facial expressions and so on NB: Append just the Keywords or tags(DON'T EXPLAIN IT)`,
+                  },
+                  ...processed.extraDetails.map((e) => ({
+                    type: 'image_url',
+                    image_url: {
+                      url: e,
+                      detail: 'low',
+                    },
+                  })),
+                ],
+              },
+            ],
+            max_tokens: 1000,
+          };
 
-      const meme = await prismaClient.files.upsert({
-        where: {
-          fileId: processed.fileURL,
-        },
-        update: {
-          summary: data.choices[0].message.content
-            .toLowerCase()
-            .includes(
-              "i'm sorry, but i can't provide assistance with that request"
-            )
-            ? processed.description
-            : data.choices[0].message.content.toLowerCase(),
-        },
-        create: {
-          fileId: processed.fileURL,
-          shortDescription: processed.description,
-          summary: data.choices[0].message.content
-            .toLowerCase()
-            .includes(
-              "i'm sorry, but i can't provide assistance with that request"
-            )
-            ? processed.description
-            : data.choices[0].message.content.toLowerCase(),
-          url: processed.fileURL,
-          tags: processed.tags.map((e) => e.label.toLowerCase()).join(''),
-          title: processed.title,
-          type: processed.fileType,
-        },
-      });
-      return Response.json(meme);
-    } catch (e: any) {
-      console.log(e);
-      console.log(e.response?.data);
-      return Response.json({ error: e.response.data.error }, { status: 429 });
+      try {
+        const data = (
+          await axios.post(
+            'https://api.openai.com/v1/chat/completions',
+            payload,
+            {
+              headers,
+            }
+          )
+        ).data as IChatCompletion;
+
+        const meme = await prismaClient.files.upsert({
+          where: {
+            fileId: processed.fileURL,
+          },
+          update: {
+            summary: data.choices[0].message.content
+              .toLowerCase()
+              .includes(
+                "i'm sorry, but i can't provide assistance with that request"
+              )
+              ? processed.description
+              : data.choices[0].message.content.toLowerCase(),
+          },
+          create: {
+            fileId: processed.fileURL,
+            shortDescription: processed.description,
+            summary: data.choices[0].message.content
+              .toLowerCase()
+              .includes(
+                "i'm sorry, but i can't provide assistance with that request"
+              )
+              ? processed.description
+              : data.choices[0].message.content.toLowerCase(),
+            url: processed.fileURL,
+            tags: processed.tags.map((e) => e.label.toLowerCase()).join(''),
+            title: processed.title,
+            type: processed.fileType,
+          },
+        });
+        return Response.json(meme);
+      } catch (e: any) {
+        console.log(e);
+        console.log(e.response?.data);
+        return Response.json({ error: e.response.data.error }, { status: 429 });
+      }
+    } else {
+      // const meme = await prismaClient.files.update({
+      //   where: {
+      //     fileId: processed.fileURL,
+      //   },
+      //   data: {
+      //   }
+      // })
+      return Response.json(exists);
     }
-  } else {
-    // const meme = await prismaClient.files.update({
-    //   where: {
-    //     fileId: processed.fileURL,
-    //   },
-    //   data: {
-    //   }
-    // })
-    return Response.json(exists);
+  } catch (e: any) {
+    console.log(e);
+    console.log(e.response?.data);
+    return Response.json({ error: e.message }, { status: 400 });
   }
 }

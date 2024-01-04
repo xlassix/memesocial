@@ -8,7 +8,7 @@ const LandingPage = ({ fallback }: any) => {
   const [search, setSearch] = useState("")
   const { isLoading, data } = useSearchMeme(search)
   return <SWRConfig value={{}}>
-    <Nav setSearch={setSearch} />
+    <Nav setSearch={setSearch} search={search} />
     {isLoading ?
       <Center bg="white" p="4rem 2rem" flexDirection="row">
         <Spinner

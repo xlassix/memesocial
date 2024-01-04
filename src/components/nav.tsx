@@ -49,7 +49,7 @@ const Nav = (props: any) => {
           <LogoSVG height="2rem" />
           <Formik
             initialValues={{
-              search: '',
+              search: props?.props ?? '',
             }}
             onSubmit={(values) => {
               props.setSearch(values.search);

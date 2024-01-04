@@ -66,7 +66,7 @@ const LandingPage = ({ fallback }: any) => {
                   // objectFit={"contain"}
                   width="100%"
                   height="20rem">
-                  <video src={`https://gateway.lighthouse.storage/ipfs/${meme.fileId}`} controls style={{ maxWidth: '100%' }} />
+                  <video src={`https://gateway.lighthouse.storage/ipfs/${meme.fileId}`} controls style={{ maxWidth: '100%', maxHeight: "20erem" }} />
                 </AspectRatio>
             }
             </>
@@ -88,7 +88,7 @@ const LandingPage = ({ fallback }: any) => {
         <ModalBody>
           <Box bg="white" overflowY="scroll" padding={"2rem 1rem"}>
             <Flex justifyContent={"space-between"} my="1rem">
-              <Text textTransform={"upperCase"} fontWeight={"700"} >Share Meme</Text>
+              <Text textTransform={"uppercase"} fontWeight={"700"} >Share Meme</Text>
               <MimeViewClose onClick={() => { setViewAbleMeme(null) }} height="1.5rem" />
             </Flex>
             {

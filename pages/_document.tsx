@@ -8,7 +8,7 @@ const Document = () => {
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <title>Gruve</title>
+      <title>MemeAfrica</title>
       <body>
         <Main />
         <NextScript />

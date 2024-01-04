@@ -35,7 +35,8 @@ const LandingPage = ({ fallback }: any) => {
                   left="0"
                   top="0"
                   borderRadius={"10px"}
-                  maxH="20rem"
+                  width="100%"
+                  height="20rem"
                   src={`https://gateway.lighthouse.storage/ipfs/${meme.fileId}`}
                   fit="cover"
                   alt="data"

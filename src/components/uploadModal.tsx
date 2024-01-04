@@ -42,6 +42,7 @@ import { Field, Formik } from 'formik';
 import { useState } from 'react';
 import { UploadMeme } from './uploadWigdet';
 import { uploadDataAPI } from '@/shared/api';
+import { mutate, useSWRConfig } from 'swr';
 
 interface IMemeData {
   fileId: string;
@@ -87,6 +88,7 @@ export const CustomInput = (props: any) => {
 };
 
 export const UploadModal = () => {
+  const { mutate } = useSWRConfig();
   const [isOpen, setModalStatus] = useState(false);
   const [isProcessing, setProcessing] = useState(false);
   const [uploadData, setUploadData] = useState<IMemeData | null>(null);
@@ -143,6 +145,7 @@ export const UploadModal = () => {
                     const data = await uploadDataAPI(values);
                     setUploadData(data);
                     setProcessing(false);
+                    mutate(`/ai?search=${''}`);
                   } catch {
                     setProcessing(false);
                   }

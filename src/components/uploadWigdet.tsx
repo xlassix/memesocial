@@ -228,7 +228,6 @@ export const UploadMeme = ({ saveData, isInvalid }: Props) => {
                 width="100%"
                 height="100%"
                 src={previewUrl}
-                padding="1rem"
                 fit="cover"
                 alt="data"
               />

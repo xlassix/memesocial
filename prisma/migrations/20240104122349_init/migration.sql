@@ -2,6 +2,7 @@
 CREATE TABLE `files` (
     `fileId` VARCHAR(191) NOT NULL,
     `title` VARCHAR(191) NOT NULL,
+    `shortDescription` VARCHAR(191) NOT NULL,
     `summary` TEXT NOT NULL,
     `tags` VARCHAR(191) NOT NULL,
     `type` VARCHAR(191) NOT NULL,

@@ -77,7 +77,7 @@ const Fonts = () => (
       
       @font-face {
         font-family: 'Aeonik';
-        src: url('/fonts/Fontspring-DEMO-integralcf-extrabold.otf') format('otf');
+        src: url('/fonts/Aeonik-Black.otf') format('otf');
              font-weight: 900;
              font-display: swap;
              font-style: normal;

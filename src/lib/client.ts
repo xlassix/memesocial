@@ -1,3 +1,5 @@
+'use client';
+
 import { create as ipfs_client } from 'ipfs-http-client';
 
 //initialize IPFS client

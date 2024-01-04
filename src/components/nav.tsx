@@ -52,7 +52,7 @@ const Nav = (props: any) => {
               search: '',
             }}
             onSubmit={(values) => {
-              console.log(values);
+              props.setSearch(values.search);
             }}
           >
             {({ handleSubmit, errors, touched, values }) => (
@@ -70,9 +70,11 @@ const Nav = (props: any) => {
           </Formik>
         </Flex>
         <Flex align={'center'} gap="1rem" fontStyle={'italic'}>
-          <Text px="0.5rem" fontWeight="300">
-            Why we exist
-          </Text>
+          {isLargerThan768 ? (
+            <Text px="0.5rem" fontWeight="300">
+              Why we exist
+            </Text>
+          ) : null}
           <UploadModal />{' '}
         </Flex>
       </Flex>

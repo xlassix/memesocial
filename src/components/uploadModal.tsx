@@ -46,6 +46,7 @@ import { uploadDataAPI } from '@/shared/api';
 interface IMemeData {
   fileId: string;
   title: string;
+  shortDescription: string;
   summary: string;
   tags: string;
   type: string;
@@ -373,7 +374,7 @@ export const UploadModal = () => {
           <ModalBody>
             <Box bg="white">
               {isProcessing || !uploadData ? (
-                <Center bg="white" p="4rem 2rem">
+                <Center bg="white" p="4rem 2rem" flexDirection="row">
                   <Spinner
                     thickness="4px"
                     speed="0.65s"
@@ -388,46 +389,53 @@ export const UploadModal = () => {
                   <Text
                     color="purple.500"
                     textAlign="center"
-                    fontWeight="800"
+                    fontWeight="900"
                     fontSize="2rem"
+                    lineHeight="1.1"
+                    textTransform="uppercase"
                   >
                     Thank you for contributing to community
                   </Text>
-                  {
-                    <>
-                      {uploadData.type.startsWith('image/') ? (
-                        <Image
-                          left="0"
-                          top="0"
-                          borderRadius={'10px'}
-                          width="100%"
-                          height="60%"
-                          src={`https://gateway.lighthouse.storage/ipfs/${uploadData.fileId}`}
-                          padding="1rem"
-                          fit="cover"
-                          alt="data"
-                        />
-                      ) : (
-                        <AspectRatio
-                          borderRadius={'10px'}
-                          left="0"
-                          top="0"
-                          width="100%"
-                          height="60%"
-                        >
-                          <video
+                  <Box width="100%" height="60%">
+                    {
+                      <>
+                        {uploadData.type.startsWith('image/') ? (
+                          <Image
+                            left="0"
+                            top="0"
+                            borderRadius={'10px'}
+                            width="100%"
+                            height="100%"
                             src={`https://gateway.lighthouse.storage/ipfs/${uploadData.fileId}`}
-                            controls
-                            style={{ maxWidth: '100%' }}
+                            fit="cover"
+                            alt="data"
                           />
-                        </AspectRatio>
-                      )}
-                    </>
-                  }
+                        ) : (
+                          <AspectRatio
+                            borderRadius={'10px'}
+                            left="0"
+                            top="0"
+                            width="100%"
+                            height="100%"
+                          >
+                            <video
+                              src={`https://gateway.lighthouse.storage/ipfs/${uploadData.fileId}`}
+                              controls
+                              style={{ maxWidth: '100%' }}
+                            />
+                          </AspectRatio>
+                        )}
+                      </>
+                    }
+                  </Box>
                   <Button
                     display="block"
                     variant={'primary'}
                     margin={'1rem 1rem 1rem auto'}
+                    onClick={() => {
+                      setUploadData(null);
+                      setModalStatus(false);
+                    }}
                   >
                     Continue
                   </Button>

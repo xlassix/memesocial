@@ -44,6 +44,12 @@ export const UploadMeme = ({ saveData, isInvalid }: Props) => {
     setUploadDone(true);
   };
 
+  const getBase64Size = (base64String: string): number => {
+    const stringLength = base64String.length - 'data:image/jpeg;base64,'.length;
+    const sizeInBytes = 4 * Math.ceil(stringLength / 3) * 0.5624896334383812;
+    return sizeInBytes;
+  };
+
   const captureImageAtSecond = (video: any, second: any, canvas: any) => {
     return new Promise((resolve, reject) => {
       video.currentTime = second;
@@ -52,8 +58,17 @@ export const UploadMeme = ({ saveData, isInvalid }: Props) => {
         canvas.height = video.videoHeight;
         const context = canvas.getContext('2d');
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        const imageUrl = canvas.toDataURL();
-        resolve(imageUrl);
+
+        let quality = 1; // Start with the highest quality
+        let compressedImageUrl = canvas.toDataURL('image/jpeg', quality);
+
+        // Check if the size is greater than 200KB
+        while (getBase64Size(compressedImageUrl) > 200 * 1024 && quality > 0) {
+          quality -= 0.1; // Decrease quality by 10%
+          compressedImageUrl = canvas.toDataURL('image/jpeg', quality);
+        }
+
+        resolve(compressedImageUrl);
       };
       video.onerror = () => reject('Error during video processing.');
     });

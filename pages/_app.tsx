@@ -39,9 +39,9 @@ const MyApp = ({ Component, pageProps }: any) => {
         <Fonts />
         <Providers>
           <Component {...pageProps} />
-          <SpeedInsights/>
         </Providers>
       </ChakraProvider>
+      <SpeedInsights />
     </>
   );
 };

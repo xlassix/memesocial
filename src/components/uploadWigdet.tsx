@@ -109,7 +109,11 @@ export const UploadMeme = ({ saveData, isInvalid }: Props) => {
               setData(file);
               setPreviewUrl(video);
               const imagePromises: string[] = [];
-              for (let second = 0; second < video.duration; second++) {
+              for (
+                let second = 0;
+                second < video.duration;
+                second += Math.floor(Math.cbrt(video.duration))
+              ) {
                 imagePromises.push(
                   (await captureImageAtSecond(video, second, canvas)) as string
                 );

@@ -1,6 +1,7 @@
 /* eslint-disable react/self-closing-comp */
 import { Html, Head, Main, NextScript } from 'next/document';
 
+
 const Document = () => {
   return (
     <Html>

@@ -6,6 +6,8 @@ import NextProgress from 'next-progress';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { theme } from '@/app/theme';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+
 
 const MyApp = ({ Component, pageProps }: any) => {
   const route = useRouter();
@@ -37,6 +39,7 @@ const MyApp = ({ Component, pageProps }: any) => {
         <Fonts />
         <Providers>
           <Component {...pageProps} />
+          <SpeedInsights/>
         </Providers>
       </ChakraProvider>
     </>

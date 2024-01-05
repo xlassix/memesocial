@@ -107,7 +107,7 @@ const LandingPage = ({ fallback }: any) => {
     <Modal
       isOpen={Boolean(viewMeme?.fileId)}
       onClose={() => setViewAbleMeme(null)}
-      size={'full'}
+      isCentered
     >
       <ModalOverlay backdropFilter="blur(3px) hue-rotate(0deg)" />
       <ModalContent>

@@ -14,6 +14,95 @@ export const World = (props: any) => {
   );
 };
 
+export const SocialX = (props: any) => {
+  return (
+    <svg
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 33 32"
+      {...props}
+    >
+      <g clip-path="url(#social)">
+        <mask
+          id="b"
+          style={{ maskType: 'luminance' }}
+          maskUnits="userSpaceOnUse"
+          x="0"
+          y="0"
+          width="33"
+          height="32"
+        >
+          <path d="M32.8 0H.8v32h32V0Z" fill="#fff" />
+        </mask>
+        <g mask="url(#socialB)">
+          <path
+            d="M29.05 0H4.55A3.75 3.75 0 0 0 .8 3.75v24.5A3.75 3.75 0 0 0 4.55 32h24.5a3.75 3.75 0 0 0 3.75-3.75V3.75A3.75 3.75 0 0 0 29.05 0Z"
+            fill="#000"
+          />
+          <path
+            d="M23.04 6.25h3.31l-7.22 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H6.48l7.73-8.84L6.05 6.25h6.83l4.71 6.23 5.45-6.23Zm-1.16 17.52h1.84L11.88 8.13H9.92l11.96 15.64Z"
+            fill="#fff"
+          />
+        </g>
+      </g>
+      <defs>
+        <clipPath id="social">
+          <path fill="#fff" transform="translate(.8)" d="M0 0h32v32H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
+
+export const SocialReddit = (props: any) => {
+  return (
+    <svg
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 32 32"
+      {...props}
+    >
+      <g clip-path="url(#Reddita)" {...props}>
+        <path
+          d="M27.2 0H4.8A4.8 4.8 0 0 0 0 4.8v22.4A4.8 4.8 0 0 0 4.8 32h22.4a4.8 4.8 0 0 0 4.8-4.8V4.8A4.8 4.8 0 0 0 27.2 0Z"
+          fill="#F40"
+        />
+        <path
+          d="M16 26.5c5.73 0 10.38-3.27 10.38-7.31 0-4.04-4.65-7.32-10.38-7.32S5.62 15.15 5.62 19.2c0 4.04 4.65 7.31 10.38 7.31Z"
+          fill="#fff"
+        />
+        <path
+          d="M6.63 18.63a2.63 2.63 0 1 0 0-5.26 2.63 2.63 0 0 0 0 5.26ZM25.44 18.63a2.63 2.63 0 1 0 0-5.26 2.63 2.63 0 0 0 0 5.26ZM23.44 9.13a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"
+          fill="#fff"
+        />
+        <path
+          d="m16 12.25 1.44-6.31 4.56.93"
+          stroke="#fff"
+          stroke-width=".97"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M11.94 22.44c2.06 1.56 6.06 1.62 8.12 0"
+          stroke="#F40"
+          stroke-width=".79"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M11.94 19.88a1.94 1.94 0 1 0 0-3.88 1.94 1.94 0 0 0 0 3.88ZM20.06 19.88a1.94 1.94 0 1 0 0-3.88 1.94 1.94 0 0 0 0 3.88Z"
+          fill="#F40"
+        />
+      </g>
+      <defs>
+        <clipPath id="Reddita">
+          <path fill="#fff" d="M0 0h32v32H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
+
 export const MimeViewClose = (props: any) => {
   return (
     <svg

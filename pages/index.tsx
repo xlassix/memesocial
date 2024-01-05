@@ -6,11 +6,14 @@ import {
   FacebookShareButton,
   LinkedinShareButton,
   TwitterShareButton,
+  RedditShareButton,
   WhatsappShareButton,
+  InstagramIcon,
+  RedditIcon,
   WhatsappIcon,
 } from 'next-share';
 import { AspectRatio, Box, Center, Flex, Image, Modal, ModalBody, ModalContent, ModalOverlay, SimpleGrid, Spinner, Text, useToast } from '@chakra-ui/react';
-import { CopyLink, Download, MimeViewClose } from '@/assets/svg';
+import { CopyLink, Download, MimeViewClose, SocialReddit, SocialX } from '@/assets/svg';
 
 function getFileExtension(fileType: string) {
   // Split the string by '/' and get the last part
@@ -23,6 +26,27 @@ function getFileExtension(fileType: string) {
   return ''; // Return empty string if the type does not have a subtype
 }
 
+
+const DownloadLink = async (viewMeme: ISearch) => {
+  try {
+    const url = `https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}?filename=${viewMeme?.title}.${getFileExtension(viewMeme?.type ?? "")}`;
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`Failed to download file: ${response.statusText}`);
+
+    const blob = await response.blob();
+    const blobUrl = window.URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = `${viewMeme?.title}.${getFileExtension(viewMeme?.type ?? "")}`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(blobUrl);
+  } catch (error) {
+    console.error('Download error:', error);
+  }
+};
 
 const LandingPage = ({ fallback }: any) => {
   const [search, setSearch] = useState("")
@@ -110,15 +134,38 @@ const LandingPage = ({ fallback }: any) => {
                   <video src={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`} controls style={{ maxWidth: '100%', maxHeight: "70vh", objectFit: "contain", margin: "auto" }} />
                 </Box>
             }
-            <Flex alignItems={"center"} justifyContent={"center"} margin={"1rem"}>
-              <a id="downloadButton" href={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`} download={`${viewMeme?.title}.${getFileExtension(viewMeme?.type ?? "")}`} target='_blank'>
+            <Flex flexWrap={"wrap"} alignItems={"center"} justifyContent={"center"} margin={"1rem"}>
+              {/* <a id="downloadButton" href={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}?filename=${viewMeme?.title}.${getFileExtension(viewMeme?.type ?? "")}`} download> */}
+              <Flex flexDirection="column" padding="1rem" gap="0.5rem" boxShadow="0px 2px 4px 0px #1B1C1D0A"
+                border="1.03px solid #F6F8FA"
+                onClick={() => viewMeme && DownloadLink(viewMeme)}
+              >
+                <Download height="2.25rem" />
+                <Text fontSize={"0.8rem"} textAlign={"center"}>Download</Text>
+              </Flex>
+              {/* </a> */}
+              <TwitterShareButton
+                url={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
+                title={`AfriMeme-${viewMeme?.title}`}
+                blankTarget
+              >
                 <Flex flexDirection="column" padding="1rem" gap="0.5rem" boxShadow="0px 2px 4px 0px #1B1C1D0A"
-                  border="1.03px solid #F6F8FA"
-                >
-                  <Download height="2rem" />
-                  <Text>Copy Link</Text>
+                  border="1.03px solid #F6F8FA">
+                  <SocialX height="2.25rem" />
+                  <Text textAlign={"center"}>X</Text>
                 </Flex>
-              </a>
+              </TwitterShareButton>
+              <RedditShareButton
+                url={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
+                title={`AfriMeme-${viewMeme?.title}`}
+                blankTarget
+              >
+                <Flex flexDirection="column" padding="1rem" gap="0.5rem" boxShadow="0px 2px 4px 0px #1B1C1D0A"
+                  border="1.03px solid #F6F8FA">
+                  <SocialReddit height="2.25rem" />
+                  <Text fontSize={"0.8rem"} textAlign={"center"}>Reddit</Text>
+                </Flex>
+              </RedditShareButton>
               <Flex flexDirection="column" padding="1rem" gap="0.5rem" boxShadow="0px 2px 4px 0px #1B1C1D0A"
                 border="1.03px solid #F6F8FA"
                 onClick={async () => {
@@ -134,8 +181,8 @@ const LandingPage = ({ fallback }: any) => {
                   });
                 }}
               >
-                <CopyLink height="2rem" />
-                <Text>Copy Link</Text>
+                <CopyLink height="2.25rem" />
+                <Text fontSize={"0.8rem"} textAlign={"center"}>Copy Link</Text>
               </Flex>
             </Flex>
           </Box>

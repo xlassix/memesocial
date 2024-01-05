@@ -13,7 +13,7 @@ import {
   WhatsappIcon,
 } from 'next-share';
 import { AspectRatio, Box, Center, Flex, Image, Modal, ModalBody, ModalContent, ModalOverlay, SimpleGrid, Spinner, Text, useToast } from '@chakra-ui/react';
-import { CopyLink, Download, MimeViewClose, SocialReddit, SocialX } from '@/assets/svg';
+import { CopyLink, Download, MimeViewClose, SocialFacebook, SocialReddit, SocialX } from '@/assets/svg';
 
 function getFileExtension(fileType: string) {
   // Split the string by '/' and get the last part
@@ -71,6 +71,9 @@ const LandingPage = ({ fallback }: any) => {
           return <Box key={`meme-${index}`} padding="0.5rem" borderRadius={"10px"}
             border="1.03px solid #0000000D"
             boxShadow="0px 16.44894790649414px 41.12236785888672px -8.22447395324707px #585C5F29"
+            onClick={() => {
+              setViewAbleMeme(meme)
+            }}
           >
             <Text textTransform={"uppercase"} fontWeight={"600"} color={"#20232D"} letterSpacing={"-1.5"}>
               {meme.title}
@@ -96,7 +99,6 @@ const LandingPage = ({ fallback }: any) => {
             </>
             <Text p="1rem 1rem 2rem 1rem" display={"block"} onClick={() => {
               setViewAbleMeme(meme)
-              console.log(meme)
             }}>{meme.shortDescription}</Text>
           </Box>
         })}
@@ -134,7 +136,7 @@ const LandingPage = ({ fallback }: any) => {
                   <video src={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`} controls style={{ maxWidth: '100%', maxHeight: "70vh", objectFit: "contain", margin: "auto" }} />
                 </Box>
             }
-            <Flex flexWrap={"wrap"} alignItems={"center"} justifyContent={"center"} margin={"1rem"}>
+            <SimpleGrid columns={[3, 4, 5]} minChildWidth="5.5rem" flexWrap={"wrap"} alignItems={"center"} justifyContent={"center"} margin={"1rem"}>
               {/* <a id="downloadButton" href={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}?filename=${viewMeme?.title}.${getFileExtension(viewMeme?.type ?? "")}`} download> */}
               <Flex flexDirection="column" padding="1rem" gap="0.5rem" boxShadow="0px 2px 4px 0px #1B1C1D0A"
                 border="1.03px solid #F6F8FA"
@@ -166,6 +168,26 @@ const LandingPage = ({ fallback }: any) => {
                   <Text fontSize={"0.8rem"} textAlign={"center"}>Reddit</Text>
                 </Flex>
               </RedditShareButton>
+              <FacebookShareButton
+                url={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
+                title={`AfriMeme-${viewMeme?.title}`}
+                blankTarget>
+                <Flex flexDirection="column" padding="1rem" gap="0.5rem" boxShadow="0px 2px 4px 0px #1B1C1D0A"
+                  border="1.03px solid #F6F8FA">
+                  <SocialFacebook height="2.25rem" />
+                  <Text fontSize={"0.8rem"} textAlign={"center"}>Reddit</Text>
+                </Flex>
+              </FacebookShareButton>
+              <WhatsappShareButton
+                url={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
+                title={`AfriMeme-${viewMeme?.title}`}
+                blankTarget>
+                <Flex flexDirection="column" padding="1rem" gap="0.5rem" boxShadow="0px 2px 4px 0px #1B1C1D0A"
+                  border="1.03px solid #F6F8FA">
+                  <WhatsappIcon style={{ height: "2.25rem" ,margin:"auto"}} />
+                  <Text fontSize={"0.8rem"} textAlign={"center"}>Reddit</Text>
+                </Flex>
+              </WhatsappShareButton>
               <Flex flexDirection="column" padding="1rem" gap="0.5rem" boxShadow="0px 2px 4px 0px #1B1C1D0A"
                 border="1.03px solid #F6F8FA"
                 onClick={async () => {
@@ -184,7 +206,7 @@ const LandingPage = ({ fallback }: any) => {
                 <CopyLink height="2.25rem" />
                 <Text fontSize={"0.8rem"} textAlign={"center"}>Copy Link</Text>
               </Flex>
-            </Flex>
+            </SimpleGrid>
           </Box>
         </ModalBody>
       </ModalContent>

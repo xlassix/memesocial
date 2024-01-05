@@ -14,6 +14,33 @@ export const World = (props: any) => {
   );
 };
 
+export const SocialFacebook = (props: any) => {
+  return (
+    <svg
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 33 32"
+      {...props}
+    >
+      <g clip-path="url(#SocialFacebook)">
+        <path
+          d="M27.8 0H5.4A4.8 4.8 0 0 0 .6 4.8v22.4A4.8 4.8 0 0 0 5.4 32h22.4a4.8 4.8 0 0 0 4.8-4.8V4.8A4.8 4.8 0 0 0 27.8 0Z"
+          fill="#1877F2"
+        />
+        <path
+          d="m22.83 20.63.7-4.63H19.1v-3c0-1.26.62-2.5 2.6-2.5h2.03V6.56s-1.84-.31-3.59-.31c-3.65 0-6.04 2.21-6.04 6.22V16h-4.06v4.63h4.06V32h5V20.62h3.73Z"
+          fill="#fff"
+        />
+      </g>
+      <defs>
+        <clipPath id="SocialFacebook">
+          <path fill="#fff" transform="translate(.6)" d="M0 0h32v32H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
+
 export const SocialX = (props: any) => {
   return (
     <svg

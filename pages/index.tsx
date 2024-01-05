@@ -154,7 +154,7 @@ const LandingPage = ({ fallback }: any) => {
                 <Flex flexDirection="column" padding="1rem" gap="0.5rem" boxShadow="0px 2px 4px 0px #1B1C1D0A"
                   border="1.03px solid #F6F8FA">
                   <SocialX height="2.25rem" />
-                  <Text textAlign={"center"}>X</Text>
+                  <Text fontSize={"0.8rem"} textAlign={"center"}>X</Text>
                 </Flex>
               </TwitterShareButton>
               <RedditShareButton
@@ -175,7 +175,7 @@ const LandingPage = ({ fallback }: any) => {
                 <Flex flexDirection="column" padding="1rem" gap="0.5rem" boxShadow="0px 2px 4px 0px #1B1C1D0A"
                   border="1.03px solid #F6F8FA">
                   <SocialFacebook height="2.25rem" />
-                  <Text fontSize={"0.8rem"} textAlign={"center"}>Reddit</Text>
+                  <Text fontSize={"0.8rem"} textAlign={"center"}>Facebook</Text>
                 </Flex>
               </FacebookShareButton>
               <WhatsappShareButton

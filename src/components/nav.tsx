@@ -47,6 +47,41 @@ const Nav = (props: any) => {
       >
         <Flex align={'center'} gap="0.75rem">
           <LogoSVG height="2rem" />
+          {isLargerThan768 ? (
+            <Formik
+              initialValues={{
+                search: props?.props ?? '',
+              }}
+              onSubmit={(values) => {
+                props.setSearch(values.search);
+              }}
+            >
+              {({ handleSubmit, errors, touched, values }) => (
+                <>
+                  <form onSubmit={handleSubmit}>
+                    <Field
+                      as={SearchInput}
+                      name="search"
+                      id="search"
+                      placeholder={'Find that meme, lol'}
+                    />
+                  </form>
+                </>
+              )}
+            </Formik>
+          ) : null}
+        </Flex>
+        <Flex align={'center'} gap="1rem" fontStyle={'italic'}>
+          {isLargerThan768 ? (
+            <Text px="0.5rem" fontWeight="300">
+              Why we exist
+            </Text>
+          ) : null}
+          <UploadModal />{' '}
+        </Flex>
+      </Flex>
+      {!isLargerThan768 ? (
+        <Box px="1rem">
           <Formik
             initialValues={{
               search: props?.props ?? '',
@@ -68,16 +103,8 @@ const Nav = (props: any) => {
               </>
             )}
           </Formik>
-        </Flex>
-        <Flex align={'center'} gap="1rem" fontStyle={'italic'}>
-          {isLargerThan768 ? (
-            <Text px="0.5rem" fontWeight="300">
-              Why we exist
-            </Text>
-          ) : null}
-          <UploadModal />{' '}
-        </Flex>
-      </Flex>
+        </Box>
+      ) : null}
     </>
   );
 };

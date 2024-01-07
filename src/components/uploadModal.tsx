@@ -237,7 +237,7 @@ export const UploadModal = () => {
                               textTransform="uppercase"
                               color="#0A0D14"
                               fontSize="1rem"
-                              fontWeight={'700'}
+                              fontWeight={'900'}
                             >
                               Give your mean a title
                             </Text>

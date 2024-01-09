@@ -287,7 +287,6 @@ export const UploadMeme = ({ saveData, isInvalid }: Props) => {
           top="20%"
           multiple={false}
           accept="image/*,video/*"
-          capture="environment"
           type="file"
           _invalid={{
             border: '1px solid #994949',

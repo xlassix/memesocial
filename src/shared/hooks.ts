@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import apiHandler from './api';
 
-export interface ISearch {
+export interface ISearchMeme {
   fileId: string;
   shortDescription: string;
   title: string;
@@ -14,7 +14,7 @@ export const useSearchMeme = (search = '') => {
   );
 
   return {
-    data: (data?.memes ?? []) as ISearch[],
+    data: (data?.memes ?? []) as ISearchMeme[],
     isLoading: !data && !error,
     error,
   };

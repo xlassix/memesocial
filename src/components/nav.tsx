@@ -24,10 +24,28 @@ import { useRouter } from 'next/navigation';
 import { Field, Formik } from 'formik';
 import { SearchInput } from './form';
 import { UploadModal } from './uploadModal';
+import {
+  ConnectWallet,
+  LocalWallet,
+  localWallet,
+  metamaskWallet,
+  useConnect,
+  useSetIsWalletModalOpen,
+  useWalletConnectHandler,
+  walletConnect,
+} from '@thirdweb-dev/react';
+import { SignUp } from './signup';
 
 const Nav = (props: any) => {
+  const metamaskConfig = metamaskWallet();
+  const walletConnectConfig = walletConnect({
+    projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_ID,
+  });
+  const setIsWalletModalOpen = useSetIsWalletModalOpen();
+  const localWalletConfig = localWallet({ persist: true });
   const [openProfileBar, setOpenProfileBar] = useState(true);
   const router = useRouter();
+  const connect = useConnect();
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
 
   return (
@@ -77,7 +95,7 @@ const Nav = (props: any) => {
               Why we exist
             </Text>
           ) : null}
-          <UploadModal />{' '}
+          <UploadModal /> <SignUp />
         </Flex>
       </Flex>
       {!isLargerThan768 ? (

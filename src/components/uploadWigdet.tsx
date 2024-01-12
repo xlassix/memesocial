@@ -308,7 +308,7 @@ export const UploadMeme = ({ saveData, isInvalid }: Props) => {
   );
 };
 
-export const ProfileAvatarEditor = ({ saveData, isInvalid }: Props) => {
+export const ProfileAvatarEditor = ({ saveData, isInvalid }: any) => {
   const [isUploadDone, setUploadDone] = useState<boolean>(false);
   const [progress, setProgress] = useState(0);
   const [data, setData] = useState<any>();
@@ -326,7 +326,7 @@ export const ProfileAvatarEditor = ({ saveData, isInvalid }: Props) => {
         },
       });
       saveData(`https://gateway.lighthouse.storage/ipfs/${_added.path}`);
-    } catch (e) {
+    } catch (e: any) {
       console.log(e.message);
     }
     setUploadDone(true);
@@ -435,7 +435,6 @@ export const ProfileAvatarEditor = ({ saveData, isInvalid }: Props) => {
                 ref={elRef}
                 image={data}
                 width={250}
-                showGrid={true}
                 height={250}
                 color={[0, 0, 0, 0.15]}
                 disableBoundaryChecks={false}

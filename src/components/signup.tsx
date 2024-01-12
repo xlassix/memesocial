@@ -286,7 +286,7 @@ export const UserInfoForm = ({
                       isInvalid={
                         Boolean(errors.avatar) && Boolean(touched?.avatar)
                       }
-                      saveData={(e) => {
+                      saveData={(e: string) => {
                         setFieldValue('avatar', e);
                       }}
                     />

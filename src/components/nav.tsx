@@ -49,7 +49,7 @@ const Nav = (props: any) => {
         height="100%"
         alignItems="center"
         justifyContent="space-between"
-        padding={'1rem'}
+        padding={isLargerThan768 ? '1rem' : '1rem 0'}
         border=""
         sx={{
           caretColor: 'transparent',

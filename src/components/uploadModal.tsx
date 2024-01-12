@@ -101,6 +101,7 @@ export const UploadModal = ({ address }: { address: string }) => {
     <>
       <Button
         fontWeight="500"
+        flexBasis={'85%'}
         fontStyle={'italic'}
         variant={'primaryOutline'}
         onClick={() => setModalStatus(true)}

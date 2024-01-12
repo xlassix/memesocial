@@ -240,6 +240,356 @@ export const Picture = (props: any) => {
     </svg>
   );
 };
+
+export const ProfileUploadPlaceHolder = (props: any) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 46 46"
+      {...props}
+    >
+      <rect width="40" height="40" x="3" y="3" fill="#F2F4F7" rx="20" />
+      <rect
+        width="40"
+        height="40"
+        x="3"
+        y="3"
+        stroke="#F9FAFB"
+        stroke-width="6"
+        rx="20"
+      />
+      <g clip-path="url(#ProfileUploadPlaceHoldera)">
+        <path
+          stroke="#475467"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.667"
+          d="M26.333 26.333 23 23m0 0-3.333 3.333M23 23v7.5m6.992-2.175A4.167 4.167 0 0 0 28 20.5h-1.05a6.666 6.666 0 1 0-11.45 6.083"
+        />
+      </g>
+      <defs>
+        <clipPath id="ProfileUploadPlaceHoldera">
+          <path fill="#fff" d="M0 0h20v20H0z" transform="translate(13 13)" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
+
+export const ProfilePlaceOlder = (props: any) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 48 48"
+      {...props}
+    >
+      <rect width="48" height="48" fill="#CAC2FF" rx="24" />
+      <g filter="url(#ProfilePlaceOldera)">
+        <g clip-path="url(#ProfilePlaceOlderb)">
+          <rect width="48" height="48" fill="#CAC2FF" rx="24" />
+          <g filter="url(#ProfilePlaceOlderc)" shape-rendering="crispEdges">
+            <ellipse
+              cx="24"
+              cy="45.6"
+              fill="url(#ProfilePlaceOlderd)"
+              rx="19.2"
+              ry="14.4"
+            />
+            <path
+              stroke="url(#ProfilePlaceOldere)"
+              d="M42.7 45.6c0 3.784-2.044 7.247-5.424 9.782C33.896 57.917 29.204 59.5 24 59.5c-5.204 0-9.896-1.583-13.277-4.118C7.343 52.847 5.3 49.384 5.3 45.6s2.044-7.248 5.423-9.782C14.104 33.283 18.797 31.7 24 31.7c5.204 0 9.897 1.583 13.276 4.118 3.38 2.535 5.424 5.998 5.424 9.782Z"
+            />
+          </g>
+          <g filter="url(#ProfilePlaceOlderf)" shape-rendering="crispEdges">
+            <circle cx="24" cy="19.2" r="9.6" fill="url(#ProfilePlaceOlderg)" />
+            <circle
+              cx="24"
+              cy="19.2"
+              r="9.1"
+              stroke="url(#ProfilePlaceOlderh)"
+            />
+          </g>
+        </g>
+      </g>
+      <defs>
+        <radialGradient
+          id="ProfilePlaceOlderd"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientTransform="matrix(0 28.8 -38.4 0 24 31.2)"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#fff" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
+        </radialGradient>
+        <radialGradient
+          id="ProfilePlaceOldere"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientTransform="matrix(0 28.8 -38.4 0 24 31.2)"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#fff" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
+        </radialGradient>
+        <radialGradient
+          id="ProfilePlaceOlderg"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientTransform="matrix(0 19.2 -19.2 0 24 9.6)"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#fff" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
+        </radialGradient>
+        <radialGradient
+          id="ProfilePlaceOlderh"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientTransform="matrix(0 19.2 -19.2 0 24 9.6)"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#fff" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
+        </radialGradient>
+        <filter
+          id="ProfilePlaceOldera"
+          width="48"
+          height="56"
+          x="0"
+          y="-8"
+          colorInterpolationFilters="sRGB"
+          filterUnits="userSpaceOnUse"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+          <feColorMatrix
+            in="SourceAlpha"
+            result="hardAlpha"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          />
+          <feOffset dy="-8" />
+          <feGaussianBlur stdDeviation="8" />
+          <feComposite in2="hardAlpha" k2="-1" k3="1" operator="arithmetic" />
+          <feColorMatrix values="0 0 0 0 0.431292 0 0 0 0 0.248526 0 0 0 0 0.951474 0 0 0 0.24 0" />
+          <feBlend in2="shape" result="effect1_innerShadow_108_64128" />
+        </filter>
+        <filter
+          id="ProfilePlaceOlderc"
+          width="46.4"
+          height="44.8"
+          x=".8"
+          y="23.2"
+          colorInterpolationFilters="sRGB"
+          filterUnits="userSpaceOnUse"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            result="hardAlpha"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          />
+          <feOffset dy="4" />
+          <feGaussianBlur stdDeviation="2" />
+          <feComposite in2="hardAlpha" operator="out" />
+          <feColorMatrix values="0 0 0 0 0.431292 0 0 0 0 0.248526 0 0 0 0 0.951474 0 0 0 0.24 0" />
+          <feBlend
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_108_64128"
+          />
+          <feBlend
+            in="SourceGraphic"
+            in2="effect1_dropShadow_108_64128"
+            result="shape"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            result="hardAlpha"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          />
+          <feOffset dy="-8" />
+          <feGaussianBlur stdDeviation="4" />
+          <feComposite in2="hardAlpha" k2="-1" k3="1" operator="arithmetic" />
+          <feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0" />
+          <feBlend in2="shape" result="effect2_innerShadow_108_64128" />
+        </filter>
+        <filter
+          id="ProfilePlaceOlderf"
+          width="27.2"
+          height="35.2"
+          x="10.4"
+          y="1.6"
+          colorInterpolationFilters="sRGB"
+          filterUnits="userSpaceOnUse"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            result="hardAlpha"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          />
+          <feOffset dy="4" />
+          <feGaussianBlur stdDeviation="2" />
+          <feComposite in2="hardAlpha" operator="out" />
+          <feColorMatrix values="0 0 0 0 0.431292 0 0 0 0 0.248526 0 0 0 0 0.951474 0 0 0 0.24 0" />
+          <feBlend
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_108_64128"
+          />
+          <feBlend
+            in="SourceGraphic"
+            in2="effect1_dropShadow_108_64128"
+            result="shape"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            result="hardAlpha"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          />
+          <feOffset dy="-8" />
+          <feGaussianBlur stdDeviation="4" />
+          <feComposite in2="hardAlpha" k2="-1" k3="1" operator="arithmetic" />
+          <feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0" />
+          <feBlend in2="shape" result="effect2_innerShadow_108_64128" />
+        </filter>
+        <clipPath id="ProfilePlaceOlderb">
+          <rect width="48" height="48" fill="#fff" rx="24" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
+
+export const LogoWithConnect = (props: any) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 43 47"
+      {...props}
+    >
+      <g filter="url(#LogoWithConnecta)">
+        <rect width="40" height="40" fill="#6E3FF3" rx="20" />
+        <rect width="40" height="40" fill="#fff" fillOpacity=".1" rx="20" />
+        <path
+          fill="url(#LogoWithConnectb)"
+          fillOpacity=".88"
+          stroke="url(#LogoWithConnectc)"
+          d="m21.311 5.056 2.104.562-2.132 7.929a6.91 6.91 0 0 0-2.242-.048l2.27-8.443Zm8.75 4.239-5.702 5.682a6.853 6.853 0 0 0-1.954-1.12l6.117-6.096 1.539 1.534ZM17.782 13.8a6.85 6.85 0 0 0-1.968 1.063l-2.235-8.31 2.104-.562 2.1 7.81Zm-6.304 18.544L9.94 30.81l5.488-5.469a6.883 6.883 0 0 0 1.874 1.2l-5.823 5.803Zm12.84 1.77L22.324 26.7a6.85 6.85 0 0 0 1.961-1.09l2.136 7.942-2.103.562Zm9.793-18.367-7.698 2.056a6.826 6.826 0 0 0-1.15-1.937l8.285-2.212.563 2.093Zm-7.342 3.333 8.174 2.182-.563 2.094-7.592-2.028a6.867 6.867 0 0 0-.02-2.248Zm-20.88 5.277 7.59-2.027a6.806 6.806 0 0 0 1.007 1.975L6.452 26.45l-.563-2.093Zm10.795 10.024 1.993-7.414a6.912 6.912 0 0 0 2.235.072l-2.125 7.904-2.103-.562Zm14.11-4.302-5.487-5.47c.476-.575.86-1.23 1.128-1.942l5.899 5.878-1.54 1.534Zm-17.593-9.063-8.144-2.174.563-2.094 7.697 2.056a6.836 6.836 0 0 0-.116 2.212Zm.507-3.436-6.042-6.02 1.54-1.534 5.7 5.682a6.834 6.834 0 0 0-1.198 1.873Z"
+        />
+      </g>
+      <path
+        fill="url(#LogoWithConnectd)"
+        stroke="#fff"
+        stroke-width=".605"
+        d="M42.697 37.072c0 4.846-3.896 8.77-8.697 8.77-4.801 0-8.698-3.924-8.698-8.77 0-4.845 3.897-8.77 8.698-8.77s8.697 3.925 8.697 8.77Z"
+      />
+      <path
+        fill="#fff"
+        fillRule="evenodd"
+        d="M33.865 42.07a.378.378 0 0 0 .358-.003l1.784-.961c.506-.272.902-.576 1.211-.93a4.175 4.175 0 0 0 1.032-2.77l-.02-3.347a.911.911 0 0 0-.625-.854l-3.319-1.123a.937.937 0 0 0-.615.004l-3.306 1.162a.913.913 0 0 0-.614.863l.02 3.344a4.176 4.176 0 0 0 1.07 2.76c.312.348.712.648 1.223.915l1.8.94Zm-.473-3.934a.378.378 0 0 0 .268.106.379.379 0 0 0 .267-.11l1.949-1.938a.366.366 0 0 0-.003-.523.383.383 0 0 0-.534.003l-1.684 1.673-.69-.668a.383.383 0 0 0-.534.003.366.366 0 0 0 .004.524l.957.93Z"
+        clipRule="evenodd"
+      />
+      <defs>
+        <linearGradient
+          id="LogoWithConnectb"
+          x1="20"
+          x2="20"
+          y1="4.445"
+          y2="51.62"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset=".313" stopColor="#fff" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
+        </linearGradient>
+        <linearGradient
+          id="LogoWithConnectc"
+          x1="74.914"
+          x2="-16.623"
+          y1="-71.066"
+          y2="3.193"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#fff" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
+        </linearGradient>
+        <linearGradient
+          id="LogoWithConnectd"
+          x1="34"
+          x2="34"
+          y1="28"
+          y2="46.145"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#6E23F6" />
+          <stop offset="1" stopColor="#4A09C0" />
+        </linearGradient>
+        <filter
+          id="LogoWithConnecta"
+          width="40"
+          height="44"
+          x="0"
+          y="-4"
+          colorInterpolationFilters="sRGB"
+          filterUnits="userSpaceOnUse"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+          <feColorMatrix
+            in="SourceAlpha"
+            result="hardAlpha"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          />
+          <feOffset dy="-4" />
+          <feGaussianBlur stdDeviation="4" />
+          <feComposite in2="hardAlpha" k2="-1" k3="1" operator="arithmetic" />
+          <feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.64 0" />
+          <feBlend in2="shape" result="effect1_innerShadow_94_32932" />
+        </filter>
+      </defs>
+    </svg>
+  );
+};
+
+export const SocialGoogle = (props: any) => {
+  return (
+    <svg
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      {...props}
+    >
+      <path
+        d="M10.15 8.64v2.9h4.12a3.46 3.46 0 0 1-1.54 2.26l2.49 1.89a7.26 7.26 0 0 0 2.28-5.52 8.4 8.4 0 0 0-.14-1.53h-7.2Zm-6.83-2a7.29 7.29 0 0 0 0 6.72l2.55-1.93A4.41 4.41 0 0 1 5.62 10c0-.5.1-.97.25-1.43L3.32 6.64Z"
+        fill="#fff"
+      />
+      <path
+        d="M10.15 5.49c1.13 0 2.13.38 2.93 1.11l2.2-2.14a7.43 7.43 0 0 0-5.13-1.96 7.66 7.66 0 0 0-6.83 4.14l2.55 1.94a4.56 4.56 0 0 1 4.28-3.1Zm-4.29 5.94-.56.42-1.98 1.51a7.67 7.67 0 0 0 6.83 4.14 7.4 7.4 0 0 0 5.07-1.81l-2.49-1.9c-.68.46-1.55.73-2.58.73a4.56 4.56 0 0 1-4.28-3.09Z"
+        fill="#fff"
+      />
+    </svg>
+  );
+};
+
+export const SocialApple = (props: any) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 22.77 22.77"
+      xmlSpace="preserve"
+      {...props}
+    >
+      <path d="M15.77 0h.16c.13 1.6-.48 2.8-1.23 3.67-.73.87-1.73 1.7-3.35 1.58-.1-1.59.5-2.7 1.25-3.56A5.4 5.4 0 0 1 15.77 0zM20.67 16.72v.04a13.25 13.25 0 0 1-1.9 3.66c-.72 1-1.6 2.33-3.19 2.33-1.36 0-2.27-.88-3.67-.9-1.48-.03-2.3.73-3.65.92h-.47c-1-.14-1.8-.93-2.38-1.64a14.39 14.39 0 0 1-3.3-8.27v-1.02c.1-2.49 1.3-4.5 2.9-5.48.85-.52 2.02-.96 3.31-.77.56.09 1.12.28 1.62.47.47.18 1.06.5 1.62.48.38 0 .75-.2 1.13-.34 1.12-.4 2.21-.87 3.66-.65a5.07 5.07 0 0 1 3.72 2.22 4.78 4.78 0 0 0-2.43 4.74 4.9 4.9 0 0 0 3.03 4.2z" />
+    </svg>
+  );
+};
+
 export const LogoSVG = (props: any) => {
   return (
     <svg

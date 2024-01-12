@@ -12,15 +12,64 @@ datasource db {
 }
 
 model files {
-  fileId           String   @id
+  fileId           String       @id
   title            String
   shortDescription String
-  summary          String   @db.Text
+  summary          String       @db.Text
   tags             String
   type             String
   url              String
-  updatedAt        DateTime @updatedAt
-  createdAt        DateTime @default(now())
+  updatedAt        DateTime     @updatedAt
+  createdAt        DateTime     @default(now())
+  downloadCount    Int          @default(0)
+  creator          String       @default("0xd79361b5e34066d723782553780dfd4aa23860b7")
+  likedBy          LikedFiles[]
+  CommentsBy       Comments[]
+  Account          Account?     @relation(fields: [creator], references: [address])
 
+  @@index(creator)
   @@fulltext([title, tags, summary])
+}
+
+model Account {
+  address            String       @id
+  joinedAt           DateTime     @default(now())
+  lastSeen           DateTime     
+  avatar             String?
+  email              String?
+  username           String?
+  twitter            String?
+  instagram          String?
+  tiktok             String?
+  profileDiscription String?
+  name               String?
+  authMethod         String?
+  smartWallet        String?
+  uploadedMemes      files[]
+  likedFiles         LikedFiles[]
+  commentedFiles     Comments[]
+}
+
+model Comments {
+  id             String   @id @default(cuid())
+  message        Boolean  @default(true)
+  accountAddress String
+  updatedAt      DateTime @updatedAt
+  Account        Account  @relation(fields: [accountAddress], references: [address])
+  files          files?   @relation(fields: [filesFileId], references: [fileId])
+  filesFileId    String?
+
+  @@unique([accountAddress, filesFileId])
+}
+
+model LikedFiles {
+  id             String   @id @default(cuid())
+  isLiked        Boolean  @default(true)
+  accountAddress String
+  updatedAt      DateTime @updatedAt
+  Account        Account  @relation(fields: [accountAddress], references: [address])
+  files          files?   @relation(fields: [filesFileId], references: [fileId])
+  filesFileId    String?
+
+  @@unique([accountAddress, filesFileId])
 }

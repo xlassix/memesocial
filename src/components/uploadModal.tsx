@@ -37,6 +37,9 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Stack,
+  InputGroup,
+  InputLeftAddon,
 } from '@chakra-ui/react';
 import { Field, Formik } from 'formik';
 import { useState } from 'react';
@@ -87,12 +90,11 @@ export const CustomInput = (props: any) => {
   );
 };
 
-export const UploadModal = () => {
+export const UploadModal = ({ address }: { address: string }) => {
   const { mutate } = useSWRConfig();
   const [isOpen, setModalStatus] = useState(false);
   const [isProcessing, setProcessing] = useState(false);
   const [uploadData, setUploadData] = useState<IMemeData | null>(null);
-
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
 
   return (
@@ -100,7 +102,7 @@ export const UploadModal = () => {
       <Button
         fontWeight="500"
         fontStyle={'italic'}
-        variant={'primary'}
+        variant={'primaryOutline'}
         onClick={() => setModalStatus(true)}
       >
         Upload Meme
@@ -116,6 +118,7 @@ export const UploadModal = () => {
             <Box bg="white" overflowY="scroll">
               <Formik
                 initialValues={{
+                  address,
                   fileURL: '',
                   fileType: '',
                   extraDetails: [],
@@ -124,6 +127,7 @@ export const UploadModal = () => {
                   tags: [],
                 }}
                 validationSchema={Yup.object().shape({
+                  address: Yup.string().required('Required'),
                   title: Yup.string().required('Required'),
                   fileURL: Yup.string().required('Required'),
                   fileType: Yup.string().required('Required'),

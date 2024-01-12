@@ -1,16 +1,22 @@
 import {
   AspectRatio,
   Box,
+  Button,
   Flex,
   Image,
   Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalOverlay,
   Text,
   VStack,
   useToast,
 } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import { client } from '@/lib/client';
-import { Picture } from '@/assets/svg';
+import AvatarEditor from 'react-avatar-editor';
+import { Picture, ProfileUploadPlaceHolder } from '@/assets/svg';
 type Props = {
   saveData: (e: {
     fileType: string;
@@ -133,8 +139,6 @@ export const UploadMeme = ({ saveData, isInvalid }: Props) => {
                   (await captureImageAtSecond(video, second, canvas)) as string
                 );
               }
-
-              console.log({ imagePromises });
               setData(file);
               setPreviewUrl(video.src);
               const cid = await handleUpload(file);
@@ -166,7 +170,6 @@ export const UploadMeme = ({ saveData, isInvalid }: Props) => {
 
         return () => URL.revokeObjectURL(url);
       } else {
-        console.log('File type is not supported.');
         setPreviewUrl('');
         setData(null);
       }
@@ -301,6 +304,163 @@ export const UploadMeme = ({ saveData, isInvalid }: Props) => {
           }}
         />
       </Box>
+    </>
+  );
+};
+
+export const ProfileAvatarEditor = ({ saveData, isInvalid }: any) => {
+  const [isUploadDone, setUploadDone] = useState<boolean>(false);
+  const [progress, setProgress] = useState(0);
+  const [data, setData] = useState<any>();
+  const [modalState, setModalState] = useState(false);
+  const elRef: any = useRef(null);
+  const [preview, setPreview] = useState('');
+
+  const handleCompressedUpload = async (file: any) => {
+    setProgress(0);
+    setUploadDone(false);
+    try {
+      const _added = await client.add(file, {
+        progress: (prog) => {
+          setProgress(prog / file.size);
+        },
+      });
+      saveData(`https://gateway.lighthouse.storage/ipfs/${_added.path}`);
+    } catch (e: any) {
+      console.log(e.message);
+    }
+    setUploadDone(true);
+  };
+
+  return (
+    <>
+      <Flex
+        my="0.75rem"
+        borderRadius={'8px'}
+        alignItems="center"
+        flexDirection="column"
+        cursor="pointer"
+        border={isInvalid ? '1px solid red' : '1px solid #E2E4E9'}
+      >
+        <Box
+          borderRadius={'8px'}
+          position="relative"
+          overflow="hidden"
+          sx={{ caretColor: 'transparent' }}
+        >
+          {!data ? (
+            <Flex
+              padding="1.25rem"
+              flexDirection="column"
+              w="100%"
+              aspectRatio={'1 / 1'}
+              alignItems="center"
+              justifyContent="center"
+              border="1px solid #EAECF0"
+            >
+              <ProfileUploadPlaceHolder cursor="pointer" height="4.5rem" />
+
+              <Text textAlign={'center'}>
+                <span
+                  style={{
+                    color: '#6941C6',
+                    fontWeight: '500',
+                    paddingRight: '1rem',
+                  }}
+                >
+                  Click to upload
+                </span>
+                or drag and drop
+              </Text>
+              <Text textAlign={'center'}>
+                SVG, PNG, JPG or GIF (max. 800x400px)
+              </Text>
+            </Flex>
+          ) : null}
+          {data?.type?.includes('image/') ? (
+            <>
+              <Image width="100%" borderRadius="full" src={preview} alt="" />
+              {progress != 1 && !isUploadDone && (
+                <Flex
+                  position="absolute"
+                  left="0"
+                  top="0"
+                  width="100%"
+                  height="100%"
+                  zIndex="2"
+                  bg="rgba(255,255,255,0.6)"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <Text fontSize="1.5rem" color="green">
+                    {`${Math.floor(progress * 1000) / 10}%`}
+                  </Text>
+                </Flex>
+              )}
+            </>
+          ) : null}
+          <Input
+            cursor="pointer"
+            position="absolute"
+            left="0"
+            top="20%"
+            multiple={false}
+            accept="image/*"
+            sx={{
+              transform: 'scale(10)',
+              opacity: 0,
+            }}
+            type="file"
+            zIndex="3"
+            onChange={async (event: any) => {
+              setModalState(true);
+              setData(event.target.files[0]);
+            }}
+          />
+        </Box>
+      </Flex>
+      <Modal
+        isCentered
+        blockScrollOnMount={true}
+        isOpen={modalState}
+        onClose={() => {
+          setModalState(false);
+        }}
+      >
+        <ModalOverlay backdropFilter="blur(4px)" />
+        <ModalContent borderRadius="1.2rem" maxWidth="23rem" bg="white">
+          <ModalBody padding="1.5rem 1rem">
+            <VStack>
+              <AvatarEditor
+                ref={elRef}
+                image={data}
+                width={250}
+                height={250}
+                color={[0, 0, 0, 0.15]}
+                disableBoundaryChecks={false}
+                borderRadius={125}
+                border={25}
+                backgroundColor="transparent"
+                scale={1.1}
+              />
+              <Button
+                variant={'primary'}
+                w="100%"
+                onClick={() => {
+                  elRef.current.getImage().toBlob((blob: any) => {
+                    const objectUrl = URL.createObjectURL(blob);
+                    setPreview(objectUrl);
+                    handleCompressedUpload(blob);
+                  }, 'image/*');
+                  setModalState(false);
+                }}
+              >
+                Save
+              </Button>
+            </VStack>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </>
   );
 };

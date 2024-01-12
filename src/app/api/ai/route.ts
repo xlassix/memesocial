@@ -69,6 +69,7 @@ export async function GET(req: Request) {
 }
 
 interface IUpload {
+  address: string;
   title: string;
   fileURL: string;
   fileType: string;
@@ -101,6 +102,7 @@ interface IChatCompletion {
 }
 
 const schema = Yup.object().shape({
+  address: Yup.string().required(),
   title: Yup.string().required(),
   fileURL: Yup.string().required(),
   fileType: Yup.string().required(),
@@ -207,6 +209,7 @@ export async function POST(req: Request) {
               : data.choices[0].message.content.toLowerCase(),
           },
           create: {
+            creator: processed.address,
             fileId: processed.fileURL,
             shortDescription: processed.description,
             summary: data.choices[0].message.content

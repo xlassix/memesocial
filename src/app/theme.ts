@@ -145,6 +145,7 @@ export const theme = extendTheme({
             outline: 'none',
             boxShadow: 'none',
           },
+          caretColor: 'transparent',
         },
         primary: {
           bg: 'purple.500',
@@ -155,12 +156,14 @@ export const theme = extendTheme({
             bg: 'purple.400',
             color: 'white.100',
           },
+          caretColor: 'transparent',
           boxShadow: '0px 1px 2px 0px #375DFB14',
         },
         primaryOutline: {
           bg: 'purple.100',
           border: '0px',
           borderColor: 'transparent',
+          caretColor: 'transparent',
           color: 'purple.500',
           rounded: '0.5rem',
           ':focus': {},

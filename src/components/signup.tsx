@@ -173,7 +173,7 @@ export const SignUp = () => {
                           />
                           <SocialLoginButton
                             strategy="apple"
-                            signInWithSocial={() => signInWithSocial('google')}
+                            signInWithSocial={() => signInWithSocial('apple')}
                           />
                           <Center color={'#525866'}>
                             <Divider />
@@ -424,7 +424,7 @@ export const UserInfoForm = ({
                     </FormLabel>
                     <Field
                       as={CustomInputWithPrefix}
-                      prefix="https://instagram.com"
+                      prefix="https://instagram.com/"
                       placeholder="Username"
                       name="description"
                       id="description"

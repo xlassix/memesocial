@@ -101,7 +101,7 @@ const Nav = (props: any) => {
                       <Image
                         borderRadius="full"
                         h="2.5rem"
-                        w="100%"
+                        w="2.5rem"
                         objectFit="cover"
                         alt=""
                         src={userData?.user?.avatar}

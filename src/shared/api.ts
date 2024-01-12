@@ -1,16 +1,19 @@
 import axios from 'axios';
 
-export default function apiHandler(url: string, data?: any, token?: string) {
+export default function apiHandler(
+  url: string,
+  data?: any,
+  method: 'POST' | 'GET' | 'DELETE' | 'PUT' = 'GET'
+) {
   const isAbsoluteURL = url.startsWith('http://') || url.startsWith('https://');
   const finalURL = isAbsoluteURL ? url : `${window.location.origin}/api${url}`;
 
   return axios(finalURL, {
-    method: data ? 'POST' : 'GET',
+    method,
     data: JSON.stringify(data),
     // withCredentials: true,
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
     },
   }).then((res) => {
     return res.data;
@@ -18,17 +21,13 @@ export default function apiHandler(url: string, data?: any, token?: string) {
 }
 
 export const uploadDataAPI = async (body: any) => {
-  return await apiHandler('/ai', body);
+  return await apiHandler('/ai', body, 'POST');
 };
 
-export const register = async (body: any) => {
-  return await apiHandler('/account/register', body);
+export const signUpAPI = async (body: { [key: string]: string }) => {
+  return await apiHandler('/auth/', body, 'POST');
 };
 
-export const transfer = async (body: any) => {
-  return await apiHandler(
-    '/transfer',
-    body,
-    sessionStorage.getItem('token') ?? ''
-  );
+export const UpdateUserAPI = async (body: { [key: string]: string }) => {
+  return await apiHandler('/user', body, 'POST');
 };

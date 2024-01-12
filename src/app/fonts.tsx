@@ -53,8 +53,8 @@ const Fonts = () => (
       
       @font-face {
         font-family: 'Aeonik';
-        src: url('/fonts/Aeonik-Regular.woff2') format('woff2'),
-        url('/fonts/AeonikTRIAL-Regular.otf') format('otf');
+        src: url('/fonts/Aeonik-Medium.woff2') format('woff2'),
+        url('/fonts/AeonikTRIAL-Medium.otf') format('otf');
              font-weight: 500;
              font-display: swap;
              font-style: normal;

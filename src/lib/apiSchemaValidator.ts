@@ -5,7 +5,6 @@ export default async function schemaValidator<T>(
   payload: any
 ) {
   try {
-    // Validate payload
     const data = await schema.validate(payload, { abortEarly: false });
     return { errors: null, payload: data as T };
   } catch (error: any) {

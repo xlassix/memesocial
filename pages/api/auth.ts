@@ -7,10 +7,10 @@ import jwt from "jsonwebtoken";
 import { NextApiRequest, NextApiResponse } from 'next'
 import cookie from "cookie";
 import { validateRoute } from '@/lib/validate';
+import { IUser } from '@/shared/hooks';
 
 function getCurrentUTC() {
     const now = new Date();
-    console.log(now.getTimezoneOffset(), now)
     const utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
 
     return utc;
@@ -38,31 +38,8 @@ const schema = yup.object().shape({
 
 
 // Get User info
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
-    const token = req.cookies[`${process.env.accessTokenName}`];
-
-    if (token) {
-
-        let user
-        try {
-            const { address } = jwt.verify(token, process.env.jwt_secret ?? "") as { [key: string]: string };
-            user = await prismaClient.account.findUnique({
-                where: { address },
-            });
-
-            if (!user) {
-                throw new Error("Not real user");
-            }
-            return res.json({ statusCode: 200, user, time: getCurrentUTC() });
-        } catch (e: any) {
-            console.log(e?.message);
-            return res.json({ statusCode: 200, user: null, time: getCurrentUTC() });
-        }
-
-        return res.json({ statusCode: 200, user: null, time: getCurrentUTC() });
-
-    }
-    return res.json({ statusCode: 200, user: null, time: getCurrentUTC() });
+export async function GET(req: NextApiRequest, res: NextApiResponse, user?: IUser) {
+    return res.json({ statusCode: 200, user, time: getCurrentUTC() });
 }
 
 
@@ -75,7 +52,6 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
 
     // Get the signer's address
     const signerAddress = await ethers.utils.verifyMessage(buildSignMessage(payload.address, payload.time), payload.signature);
-    console.log(signerAddress.toLowerCase(), payload.address, payload)
     if (signerAddress.toLowerCase() !== payload.address) {
         return res.status(400).json({ errors: ["Invalid Signature"], status: 406 });
     }
@@ -95,7 +71,6 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
             }
         })
     }
-    console.log(user.lastSeen.getTime(), getCurrentUTC().getTime(), user.lastSeen, getCurrentUTC())
     if (user.lastSeen.getTime() >= getCurrentUTC().getTime()) {
         return res
             .status(406)
@@ -160,7 +135,12 @@ export async function DELETE(req: NextApiRequest, res: NextApiResponse) {
 }
 
 
-export async function PUT(req: NextApiRequest, res: NextApiResponse, user: { address: string }) {
+export async function PUT(req: NextApiRequest, res: NextApiResponse, user?: IUser) {
+    if (!user) {
+        return res
+            .status(401)
+            .end()
+    }
     const _user = await prismaClient.account.update({
         where: {
             address: user.address
@@ -173,18 +153,18 @@ export async function PUT(req: NextApiRequest, res: NextApiResponse, user: { add
 }
 
 
-const MAIN = async (req: NextApiRequest, res: NextApiResponse) => {
+const MAIN = async (req: NextApiRequest, res: NextApiResponse, user?: IUser) => {
     if (req.method === "GET") {
-        return GET(req, res)
+        return GET(req, res, user)
     } else if (req.method === "POST") {
         return POST(req, res)
     }
     else if (req.method === "PUT") {
-        return validateRoute((req: NextApiRequest, res: NextApiResponse, user: any) => PUT(req, res, user))
+        return PUT(req, res, user)
     }
     else {
         return DELETE(req, res);
     }
 };
 
-export default MAIN
+export default validateRoute(MAIN, "allowAnonymous")

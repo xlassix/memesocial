@@ -46,7 +46,11 @@ const Nav = (props: any) => {
   return (
     <>
       <Flex
-        height="100%"
+        position="sticky"
+        top="0"
+        bg="white"
+        zIndex={'5'}
+        w="100%"
         alignItems="center"
         justifyContent="space-between"
         padding={isLargerThan768 ? '1rem' : '1rem 0'}
@@ -54,12 +58,11 @@ const Nav = (props: any) => {
         sx={{
           caretColor: 'transparent',
         }}
-        marginX="1rem"
         fontWeight="700"
         borderBottom="1px solid #E2E4E9"
       >
         <Flex align={'center'} gap="0.75rem">
-          <LogoSVG height="2rem" />
+          <LogoSVG height="2rem" onClick={() => router.push('/')} />
           {isLargerThan768 ? (
             <Formik
               initialValues={{
@@ -88,20 +91,20 @@ const Nav = (props: any) => {
           {userData?.user?.avatar && userData?.user?.address ? (
             <Flex>
               <UploadModal address={userData?.user?.address} />
-              <Menu closeOnSelect={false}>
+              <Menu closeOnSelect={true}>
                 <MenuButton
                   as={Button}
                   padding={'0 0 0 1rem'}
-                  bg="transparent"
+                  bg="transparent !important"
                   _hover={{ bg: 'transparent' }}
-                  _focus={{}}
+                  _focus={{ bg: 'transparent' }}
                 >
                   <Flex>
                     {userData?.user?.avatar !== null ? (
                       <Image
-                        borderRadius="full"
-                        h="2.5rem"
-                        w="2.5rem"
+                        borderRadius="8px"
+                        w="2.75rem"
+                        aspectRatio={'1 / 1'}
                         objectFit="cover"
                         alt=""
                         src={userData?.user?.avatar}
@@ -111,24 +114,31 @@ const Nav = (props: any) => {
                 </MenuButton>
                 <MenuList minWidth="240px">
                   <MenuItem
+                    px="1rem"
                     textTransform={'uppercase'}
                     fontWeight={'900'}
                     color={'#525866'}
                     _hover={{
+                      px: '1rem',
                       color: '#0A0D14',
                       bg: 'white',
                       border: '1px solid #EEEBFF',
                       boxShadow: '0px 24px 56px -4px #585C5F29',
                     }}
                     fontSize={'1rem'}
+                    onClick={() => {
+                      router.push('/user/me');
+                    }}
                   >
                     Profile
                   </MenuItem>
-                  <MenuItem
+                  {/* <MenuItem
+                    px="1rem"
                     textTransform={'uppercase'}
                     fontWeight={'900'}
                     color={'#525866'}
                     _hover={{
+                      px: "1rem",
                       color: '#0A0D14',
                       bg: 'white',
                       border: '1px solid #EEEBFF',
@@ -139,10 +149,12 @@ const Nav = (props: any) => {
                     Why We exist
                   </MenuItem>
                   <MenuItem
+                    px="1rem"
                     textTransform={'uppercase'}
                     fontWeight={'900'}
                     color={'#525866'}
                     _hover={{
+                      px: "1rem",
                       color: '#0A0D14',
                       bg: 'white',
                       border: '1px solid #EEEBFF',
@@ -151,8 +163,9 @@ const Nav = (props: any) => {
                     fontSize={'1rem'}
                   >
                     The Clowns Behind this
-                  </MenuItem>
+                  </MenuItem> */}
                   <MenuItem
+                    px="1rem"
                     textTransform={'uppercase'}
                     onClick={async () => {
                       await Promise.all([
@@ -164,6 +177,7 @@ const Nav = (props: any) => {
                     fontWeight={'900'}
                     color={'#525866'}
                     _hover={{
+                      px: '1rem',
                       color: '#0A0D14',
                       bg: 'white',
                       border: '1px solid #EEEBFF',

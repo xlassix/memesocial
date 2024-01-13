@@ -7,12 +7,14 @@ import NextProgress from 'next-progress';
 import { theme } from '@/app/theme';
 import { ArbitrumNova } from "@thirdweb-dev/chains";
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import Nav from '@/components/nav';
 
 
 const MyApp = ({ Component, pageProps }: any) => {
+  const [search, setSearch] = useState("")
   return (
     <>
-      <NextProgress delay={300} color="#EA445A" options={{ showSpinner: false }} />
+      <NextProgress delay={400} color="#6E3FF3" options={{ showSpinner: true }} />
       <ThirdwebProvider
         clientId={process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}
         activeChain={ArbitrumNova}
@@ -36,7 +38,8 @@ const MyApp = ({ Component, pageProps }: any) => {
         <ChakraProvider theme={theme}>
           <Fonts />
           <Providers>
-            <Component {...pageProps} />
+            <Nav setSearch={setSearch} search={search} />
+            <Component {...pageProps} search={search} />
           </Providers>
         </ChakraProvider>
         <SpeedInsights />

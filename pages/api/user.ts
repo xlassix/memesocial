@@ -1,14 +1,15 @@
 import schemaValidator from "@/lib/apiSchemaValidator";
 import prismaClient from "@/lib/prisma";
 import { validateRoute } from "@/lib/validate";
+import { IUser } from "@/shared/hooks";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import * as Yup from 'yup';
 
 const userInfoSchema = Yup.object().shape({
     description: Yup.string().required('Description is required'),
-    instagram: Yup.string().required('Instagram handle is required'),
-    tiktok: Yup.string().required('TikTok handle is required'),
+    instagram: Yup.string(),
+    tiktok: Yup.string(),
     x: Yup.string().required('X is required'),
     avatar: Yup.string(), // Assuming this can be an optional field
     email: Yup.string()
@@ -25,6 +26,117 @@ type UserInfo = {
     avatar: string;
     email: string;
 };
+
+
+export async function GET(req: NextApiRequest, res: NextApiResponse, user: { address: string }) {
+    const data = new URL(req.url?.startsWith("/") ? `https://afrimeme.com/${req.url ?? ""}` : "").searchParams.get('search') ?? '';
+    let memes;
+    const _user = await prismaClient.account.findUnique({
+        where: {
+            address: user.address
+        },
+        include: {
+            _count: {
+                select: {
+                    uploadedMemes: true
+                }
+            }
+        }
+    })
+    if (!data.includes(' ')) {
+        memes = await prismaClient.files.findMany({
+            where: {
+                AND: [
+                    {
+                        creator: user.address
+                    }
+                    , {
+                        OR: [
+                            {
+                                summary: {
+                                    contains: data,
+                                },
+                            },
+                            {
+                                title: {
+                                    contains: data,
+                                },
+                            },
+                            {
+                                tags: {
+                                    contains: data,
+                                },
+                            },
+                        ],
+                    }]
+            },
+            take: 200,
+            select: {
+                fileId: true,
+                shortDescription: true,
+                title: true,
+                type: true,
+                downloadCount: true,
+                _count: {
+                    select: {
+                        likedBy: {
+                            where: {
+                                isLiked: true
+                            }
+                        },
+                        CommentsBy: true
+                    }
+                }
+            },
+        });
+    } else {
+        memes = await prismaClient.files.findMany({
+            where: {
+                AND: [
+                    {
+                        creator: user.address
+                    }, {
+                        OR: [
+                            {
+                                summary: {
+                                    search: data,
+                                },
+                            },
+                            {
+                                title: {
+                                    search: data,
+                                },
+                            },
+                            {
+                                tags: {
+                                    search: data,
+                                },
+                            },
+                        ],
+                    }]
+            },
+            take: 200,
+            select: {
+                fileId: true,
+                shortDescription: true,
+                title: true,
+                type: true,
+                downloadCount: true,
+                _count: {
+                    select: {
+                        likedBy: {
+                            where: {
+                                isLiked: true
+                            }
+                        },
+                        CommentsBy: true
+                    }
+                }
+            },
+        });
+    }
+    return res.json({ statusCode: 200, memes, user: _user });
+}
 
 
 export async function POST(req: NextApiRequest, res: NextApiResponse, user: { address: string }) {
@@ -52,11 +164,9 @@ export async function POST(req: NextApiRequest, res: NextApiResponse, user: { ad
         .json({ user: _user });
 }
 
-const MAIN = async (req: NextApiRequest, res: NextApiResponse, user: any) => {
+const MAIN = async (req: NextApiRequest, res: NextApiResponse, user: IUser) => {
     if (req.method === "GET") {
-        return res
-            .status(200)
-            .json({ user: user });
+        return GET(req, res, user)
     } else if (req.method === "POST") {
         return POST(req, res, user)
     }
@@ -67,4 +177,4 @@ const MAIN = async (req: NextApiRequest, res: NextApiResponse, user: any) => {
     }
 };
 
-export default validateRoute(MAIN)
+export default validateRoute(MAIN, "min")

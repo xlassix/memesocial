@@ -2,7 +2,10 @@ import { NextApiResponse, NextApiRequest } from 'next';
 import jwt from 'jsonwebtoken';
 import prismaClient from './prisma';
 
-export const validateRoute = (handler: any) => {
+export const validateRoute = (
+  handler: any,
+  mode: 'allowAnonymous' | 'min' | 'full' = 'full'
+) => {
   return async (req: NextApiRequest, res: NextApiResponse) => {
     const token = req.cookies[`${process.env.accessTokenName}`];
 
@@ -10,11 +13,14 @@ export const validateRoute = (handler: any) => {
       let user;
 
       try {
-        const { address } = jwt.verify(token, process.env.jwt_secret ?? '') as {
+        const data = jwt.verify(token, process.env.jwt_secret ?? '') as {
           [key: string]: string;
         };
+        if (mode === 'min') {
+          return handler(req, res, data);
+        }
         user = await prismaClient.account.findUnique({
-          where: { address },
+          where: { address: data.address },
         });
 
         if (!user) {
@@ -27,11 +33,19 @@ export const validateRoute = (handler: any) => {
 
       return handler(req, res, user);
     }
-    return res.status(401).end();
+
+    return mode == 'allowAnonymous'
+      ? handler(req, res, null)
+      : res.status(401).end();
   };
 };
 
-export const validateToken = (token: string) => {
+type UserTokenDetails = {
+  email: string;
+  address: string;
+};
+
+export const validateToken = (token: string): UserTokenDetails => {
   const user = jwt.verify(token, process.env.jwt_secret ?? '');
-  return user;
+  return user as UserTokenDetails;
 };

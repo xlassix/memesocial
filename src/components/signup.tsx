@@ -32,7 +32,7 @@ import {
 } from '@thirdweb-dev/react';
 import { CustomInput } from './uploadModal';
 import { buildSignMessage } from '@/lib/helper';
-import { useMe } from '@/shared/hooks';
+import { IUser, useMe } from '@/shared/hooks';
 import apiHandler, { UpdateUserAPI, signUpAPI } from '@/shared/api';
 import { useSWRConfig } from 'swr';
 import { Field, Formik } from 'formik';
@@ -67,14 +67,14 @@ export const SignUp = () => {
       const sig = await personalWallet.signMessage(
         buildSignMessage(address.toLowerCase(), userData.time)
       );
-      const { user } = await signUpAPI({
+      const { user }: { user?: IUser } = await signUpAPI({
         address,
         signature: sig,
         time: userData.time,
       });
       mutate('/auth');
       setLoginState('done');
-      if (user?.avatar) {
+      if (user?.profileDescription) {
         setModalStatus(false);
       }
     } catch (e: any) {
@@ -232,7 +232,7 @@ export const UserInfoForm = ({
   const [data, setData] = useState<{ [key: string]: string }>({});
   return (
     <Box>
-      {data?.x ? (
+      {data?.description ? (
         <Box>
           <Center>
             <ProfilePlaceOlder height="3rem" />
@@ -299,6 +299,24 @@ export const UserInfoForm = ({
                   >
                     Proceed
                   </Button>
+                  <Button
+                    variant={'primaryOutline'}
+                    w="100%"
+                    onClick={async () => {
+                      try {
+                        setLoginState('processing');
+                        const user = await UpdateUserAPI(data);
+                        setLoginState('init');
+                        done();
+                      } catch (e: any) {
+                        setLoginState('init');
+                        setError(e?.response?.data?.errors[0] ?? e.message);
+                      }
+                    }}
+                    fontWeight={'500'}
+                  >
+                    Next
+                  </Button>
                 </form>
               </>
             )}
@@ -315,8 +333,8 @@ export const UserInfoForm = ({
           }}
           validationSchema={Yup.object().shape({
             x: Yup.string().required('Required'),
-            tiktok: Yup.string().required('Required'),
-            instagram: Yup.string().required('Required'),
+            tiktok: Yup.string(),
+            instagram: Yup.string(),
             description: Yup.string().required('Required'),
           })}
           onSubmit={async (values) => {
@@ -418,9 +436,9 @@ export const UserInfoForm = ({
                       lineHeight={1.5}
                     >
                       Instagram
-                      <span style={{ color: '#6E3FF3', fontSize: '1.2rem' }}>
-                        *
-                      </span>
+                      {/* <span style={{ color: '#6E3FF3', fontSize: '1.2rem' }}>
+                                                *
+                                            </span> */}
                     </FormLabel>
                     <Field
                       as={CustomInputWithPrefix}
@@ -445,10 +463,10 @@ export const UserInfoForm = ({
                       fontWeight={'500'}
                       lineHeight={1.5}
                     >
-                      Tiktox
-                      <span style={{ color: '#6E3FF3', fontSize: '1.2rem' }}>
-                        *
-                      </span>
+                      Tiktok
+                      {/* <span style={{ color: '#6E3FF3', fontSize: '1.2rem' }}>
+                                                *
+                                            </span> */}
                     </FormLabel>
                     <Field
                       as={CustomInputWithPrefix}

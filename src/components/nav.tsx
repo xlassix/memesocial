@@ -173,6 +173,7 @@ const Nav = (props: any) => {
                         apiHandler('/auth', {}, 'DELETE'),
                       ]);
                       mutate('/auth');
+                      router.replace('/');
                     }}
                     fontWeight={'900'}
                     color={'#525866'}

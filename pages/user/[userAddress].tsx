@@ -31,7 +31,7 @@ const UserPage = ({ fallback, search, params }: any) => {
 export async function getStaticPaths() {
     return {
         paths: [
-            '/user/404',
+            '/user/0x000',
         ],
         fallback: true,
     }

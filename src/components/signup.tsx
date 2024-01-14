@@ -73,9 +73,10 @@ export const SignUp = () => {
         time: userData.time,
       });
       mutate('/auth');
-      setLoginState('done');
       if (user?.profileDescription) {
         setModalStatus(false);
+      } else {
+        setLoginState('done');
       }
     } catch (e: any) {
       setLoginState('init');

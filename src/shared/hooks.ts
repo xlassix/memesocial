@@ -12,7 +12,7 @@ export interface ISearchMeme {
 export interface IUserDetails {
   statusCode: number;
   memes: Meme[];
-  user: User;
+  user: IUserDetails;
   _count: Count;
 }
 
@@ -30,7 +30,7 @@ interface MemeCount {
   CommentsBy: number;
 }
 
-interface User {
+export interface IUserDetails {
   address: string;
   joinedAt: string; // ISO date string format
   lastSeen: string; // ISO date string format
@@ -88,14 +88,17 @@ export const useSearchMeme = (search = '') => {
   };
 };
 
-export const useSearchUserMeme = (search = '') => {
-  const { data, error } = useSWR(`/user?search=${search}`, (url) =>
-    apiHandler(url, {}, 'GET')
+export const useSearchUserMeme = (search = '', address = '') => {
+  const { data, error } = useSWR(
+    address
+      ? `/user?search=${search}&address=${address}`
+      : `/user?search=${search}`,
+    (url) => apiHandler(url, {}, 'GET')
   );
 
   return {
     data: (data?.memes ?? []) as ISearchMeme[],
-    user: (data?.user ?? []) as User,
+    user: (data?.user ?? []) as IUserDetails,
     isLoading: !data && !error,
     error,
   };

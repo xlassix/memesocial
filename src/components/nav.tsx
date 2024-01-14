@@ -36,12 +36,12 @@ const Nav = (props: any) => {
   const router = useRouter();
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
   const { userData } = useMe();
-  console.log({
-    connectionStatus,
-    address,
-    userData,
-    data: userData?.user?.avatar && userData?.user?.address,
-  });
+  // console.log({
+  //   connectionStatus,
+  //   address,
+  //   userData,
+  //   data: userData?.user?.avatar && userData?.user?.address,
+  // });
 
   return (
     <>
@@ -127,7 +127,7 @@ const Nav = (props: any) => {
                     }}
                     fontSize={'1rem'}
                     onClick={() => {
-                      router.push('/user/me');
+                      router.push(`/user/${address}`);
                     }}
                   >
                     Profile

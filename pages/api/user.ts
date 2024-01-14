@@ -28,12 +28,17 @@ type UserInfo = {
 };
 
 
-export async function GET(req: NextApiRequest, res: NextApiResponse, user: { address: string }) {
-    const data = new URL(req.url?.startsWith("/") ? `https://afrimeme.com/${req.url ?? ""}` : "").searchParams.get('search') ?? '';
+export async function GET(req: NextApiRequest, res: NextApiResponse, user?: { address: string }) {
+    const url = new URL(req.url?.startsWith("/") ? `https://afrimeme.com/${req.url ?? ""}` : "")
+    const data = url.searchParams.get('search') ?? '';
+    const userAddress = (url.searchParams.get('address') ?? user?.address ?? "").toLowerCase()
+    if (!userAddress) {
+        return res.status(406).end();
+    }
     let memes;
     const _user = await prismaClient.account.findUnique({
         where: {
-            address: user.address
+            address: userAddress
         },
         include: {
             _count: {
@@ -48,7 +53,7 @@ export async function GET(req: NextApiRequest, res: NextApiResponse, user: { add
             where: {
                 AND: [
                     {
-                        creator: user.address
+                        creator: userAddress
                     }
                     , {
                         OR: [
@@ -94,7 +99,7 @@ export async function GET(req: NextApiRequest, res: NextApiResponse, user: { add
             where: {
                 AND: [
                     {
-                        creator: user.address
+                        creator: userAddress
                     }, {
                         OR: [
                             {
@@ -164,10 +169,13 @@ export async function POST(req: NextApiRequest, res: NextApiResponse, user: { ad
         .json({ user: _user });
 }
 
-const MAIN = async (req: NextApiRequest, res: NextApiResponse, user: IUser) => {
+const MAIN = async (req: NextApiRequest, res: NextApiResponse, user?: IUser) => {
     if (req.method === "GET") {
         return GET(req, res, user)
     } else if (req.method === "POST") {
+        if (!user) {
+            return res.status(401).end();
+        }
         return POST(req, res, user)
     }
     else {
@@ -177,4 +185,4 @@ const MAIN = async (req: NextApiRequest, res: NextApiResponse, user: IUser) => {
     }
 };
 
-export default validateRoute(MAIN, "min")
+export default validateRoute(MAIN, "allowAnonymous")

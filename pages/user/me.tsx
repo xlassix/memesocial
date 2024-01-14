@@ -1,16 +1,25 @@
 import { SWRConfig } from 'swr';
-import { useSearchUserMeme } from '@/shared/hooks';
+import { useMe, useSearchUserMeme } from '@/shared/hooks';
 import { MemeViewUser } from '@/components/memeView';
 import { validateToken } from '@/lib/validate';
 import { Box, Flex, Image, Text, useMediaQuery } from '@chakra-ui/react';
 import { SocialInstagram, SocialTikTok, SocialX, SocialXClear } from '@/assets/svg';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 
 const ProfilePage = ({ fallback, search }: any) => {
-    const { isLoading, data, user } = useSearchUserMeme(search)
-    const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
     const router = useRouter()
+    const { isLoading, data, user } = useSearchUserMeme(search)
+    const { userData, isLoading: isloadingUser } = useMe()
+    useEffect(() => {
+        if ((!isLoading && isloadingUser) && user.address != userData?.user?.address) {
+            router.replace("/")
+        }
+    },
+        [userData, isLoading, user, isloadingUser])
+    const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
+
     return <SWRConfig value={{ fallback }}>
         <Flex px="2rem" gap="1rem" justifyContent={"center"} position="sticky" display={isLargerThan768 ? "flex" : "block"}>
             <Box sx={isLargerThan768 ? {
@@ -79,22 +88,6 @@ const ProfilePage = ({ fallback, search }: any) => {
         </Flex>
     </SWRConfig >
 };
-
-export const getServerSideProps = async (ctx: any) => {
-
-    try {
-        const _user = validateToken(ctx.req.cookies[process.env?.accessTokenName ?? ""] ?? "");
-        return {
-            props: {},
-        };
-    } catch (e) {
-        return {
-            props: {},
-            redirect: { destination: "/", permanent: false },
-        }
-    }
-}
-
 
 export default ProfilePage;
 

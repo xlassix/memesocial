@@ -151,6 +151,7 @@ export const UploadModal = ({ address }: { address: string }) => {
                     setUploadData(data);
                     setProcessing(false);
                     mutate(`/ai?search=${''}`);
+                    mutate(`/user?search=${''}`);
                   } catch {
                     setProcessing(false);
                   }

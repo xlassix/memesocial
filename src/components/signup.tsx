@@ -1,5 +1,5 @@
 import {
-  LogoSVG,
+  LogoFavicon,
   LogoWithConnect,
   ProfilePlaceOlder,
   SocialApple,
@@ -129,11 +129,11 @@ export const SignUp = () => {
         >
           <ModalBody>
             <Box>
-              <Center marginBottom={'24px'}>
+              <Center marginY={'20px'}>
                 {error ? (
                   <LogoWithConnect height="3rem" />
                 ) : (
-                  <LogoSVG height="3rem" />
+                  <LogoFavicon height="3rem" />
                 )}
               </Center>
               {error ? (
@@ -392,7 +392,8 @@ export const UserInfoForm = ({
                   <FormControl
                     position="relative"
                     isInvalid={
-                      Boolean(errors.instagram) && Boolean(touched?.instagram)
+                      Boolean(errors.description) &&
+                      Boolean(touched?.description)
                     }
                   >
                     <FormLabel
@@ -409,11 +410,11 @@ export const UserInfoForm = ({
                     <Field
                       as={Textarea}
                       placeholder="Write a short for your profile"
-                      name="instagram"
-                      id="instagram"
+                      name="description"
+                      id="description"
                     />
                     <FormErrorMessage>
-                      {errors?.instagram?.toString()}
+                      {errors?.description?.toString()}
                     </FormErrorMessage>
                   </FormControl>
                   <FormControl
@@ -438,9 +439,7 @@ export const UserInfoForm = ({
                       name="x"
                       id="x"
                     />
-                    <FormErrorMessage>
-                      {errors?.description?.toString()}
-                    </FormErrorMessage>
+                    <FormErrorMessage>{errors?.x?.toString()}</FormErrorMessage>
                   </FormControl>
                   <FormControl
                     position="relative"
@@ -464,11 +463,11 @@ export const UserInfoForm = ({
                       as={CustomInputWithPrefix}
                       prefix="https://instagram.com/"
                       placeholder="Username"
-                      name="description"
-                      id="description"
+                      name="instagram"
+                      id="instagram"
                     />
                     <FormErrorMessage>
-                      {errors?.description?.toString()}
+                      {errors?.instagram?.toString()}
                     </FormErrorMessage>
                   </FormControl>
                   <FormControl

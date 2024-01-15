@@ -38,7 +38,7 @@ export const ProfileDetails = ({
             alt=""
             src={
               user?.avatar ??
-              'https://gateway.lighthouse.storage/ipfs/QmanFHjUQXbpgg8vC86np7WcyNDxnVJTsrK3NjZePQjGzM'
+              'https://gateway.lighthouse.storage/ipfs/QmNYrSm4fYE7M9SDj25XGAzydRYxJgMZ3ZTckgjz1EGv8p'
             }
           />
           <Text

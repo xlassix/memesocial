@@ -14,7 +14,7 @@ ALTER TABLE `Comments` DROP FOREIGN KEY `Comments_filesFileId_fkey`;
 -- AlterTable
 ALTER TABLE `Account` RENAME COLUMN `profileDiscription`
     to `profileDescription`,
-    MODIFY `avatar` VARCHAR(191) NULL DEFAULT 'https://gateway.lighthouse.storage/ipfs/QmanFHjUQXbpgg8vC86np7WcyNDxnVJTsrK3NjZePQjGzM';
+    MODIFY `avatar` VARCHAR(191) NULL DEFAULT 'https://gateway.lighthouse.storage/ipfs/QmNYrSm4fYE7M9SDj25XGAzydRYxJgMZ3ZTckgjz1EGv8p';
 
 -- DropTable
 DROP TABLE `Comments`;

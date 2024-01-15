@@ -61,9 +61,9 @@ const Nav = (props: any) => {
         fontWeight="700"
         borderBottom="1px solid #E2E4E9"
       >
-        <Flex align={'center'} gap="0.75rem">
-          <LogoSVG height="2rem" onClick={() => router.push('/')} />
-          {isLargerThan768 ? (
+        <LogoSVG height="2rem" onClick={() => router.push('/')} />
+        {isLargerThan768 ? (
+          <Box flexBasis={'40%'}>
             <Formik
               initialValues={{
                 search: props?.props ?? '',
@@ -85,8 +85,8 @@ const Nav = (props: any) => {
                 </>
               )}
             </Formik>
-          ) : null}
-        </Flex>
+          </Box>
+        ) : null}
         <Flex align={'center'} gap="1rem" fontStyle={'italic'}>
           {userData?.user?.profileDescription && userData?.user?.address ? (
             <Flex>
@@ -109,7 +109,7 @@ const Nav = (props: any) => {
                         alt=""
                         src={
                           userData?.user?.avatar ??
-                          'https://gateway.lighthouse.storage/ipfs/QmanFHjUQXbpgg8vC86np7WcyNDxnVJTsrK3NjZePQjGzM'
+                          'https://gateway.lighthouse.storage/ipfs/QmNYrSm4fYE7M9SDj25XGAzydRYxJgMZ3ZTckgjz1EGv8p'
                         }
                       />
                     ) : null}

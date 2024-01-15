@@ -7,7 +7,7 @@ const Document = () => {
     <Html>
       <Head>
         <link rel="manifest" href="/site.webmanifest" />
-        <link rel="icon" href="/logo.ico" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <title>MemeAfrica</title>
       <body>

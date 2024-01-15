@@ -40,7 +40,7 @@ export interface IUserDetails {
   twitter: string;
   instagram: string;
   tiktok: string;
-  profileDiscription: string;
+  profileDescription: string;
   name: string | null;
   authMethod: string | null;
   smartWallet: string | null;

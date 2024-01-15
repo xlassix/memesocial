@@ -74,7 +74,7 @@ export const ProfileDetails = ({
             minH={'8rem'}
           >
             <Text fontSize="14px" padding={'0.5rem'}>
-              {user.profileDiscription}
+              {user.profileDescription}
             </Text>
           </Box>
           <Flex

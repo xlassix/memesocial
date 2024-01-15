@@ -34,14 +34,14 @@ model files {
 model Account {
   address            String       @id
   joinedAt           DateTime     @default(now())
-  lastSeen           DateTime     
-  avatar             String?
+  lastSeen           DateTime
+  avatar             String?      @default("https://gateway.lighthouse.storage/ipfs/QmanFHjUQXbpgg8vC86np7WcyNDxnVJTsrK3NjZePQjGzM")
   email              String?
   username           String?
   twitter            String?
   instagram          String?
   tiktok             String?
-  profileDiscription String?
+  profileDescription String?
   name               String?
   authMethod         String?
   smartWallet        String?
@@ -52,14 +52,12 @@ model Account {
 
 model Comments {
   id             String   @id @default(cuid())
-  message        Boolean  @default(true)
+  message        String   @db.Text
   accountAddress String
   updatedAt      DateTime @updatedAt
   Account        Account  @relation(fields: [accountAddress], references: [address])
-  files          files?   @relation(fields: [filesFileId], references: [fileId])
-  filesFileId    String?
-
-  @@unique([accountAddress, filesFileId])
+  files          files    @relation(fields: [filesFileId], references: [fileId])
+  filesFileId    String
 }
 
 model LikedFiles {

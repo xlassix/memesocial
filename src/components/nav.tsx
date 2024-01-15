@@ -88,7 +88,7 @@ const Nav = (props: any) => {
           ) : null}
         </Flex>
         <Flex align={'center'} gap="1rem" fontStyle={'italic'}>
-          {userData?.user?.avatar && userData?.user?.address ? (
+          {userData?.user?.profileDescription && userData?.user?.address ? (
             <Flex>
               <UploadModal address={userData?.user?.address} />
               <Menu closeOnSelect={true}>

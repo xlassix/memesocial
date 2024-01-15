@@ -65,7 +65,7 @@ export const SignUp = () => {
       const address = await personalWallet.getAddress();
       setLoginState('awaiting_auth_sign');
       const sig = await personalWallet.signMessage(
-        buildSignMessage(address.toLowerCase(), userData.time)
+        buildSignMessage(address.toLowerCase(), userData?.time)
       );
 
       const { user }: { user?: IUser } = await signUpAPI({
@@ -200,11 +200,11 @@ export const SignUp = () => {
                       )}
                       <EmailSignIn
                         emailSignInDone={emailSignInDone}
-                        time={userData.time}
+                        time={userData?.time}
                         loginState={loginState}
                         setLoginState={setLoginState}
                         email={email}
-                        setError={setEmail}
+                        setError={setError}
                         setEmail={setEmail}
                       />
                     </>
@@ -558,10 +558,10 @@ export const SocialLoginButton = ({
 export default function EmailSignIn({
   loginState,
   setLoginState,
-  email,
-  setEmail,
   time,
   emailSignInDone,
+  email,
+  setEmail,
   setError,
 }: {
   loginState: LoginStatus;
@@ -572,27 +572,31 @@ export default function EmailSignIn({
   emailSignInDone: (address: string, sig: string) => void;
   setError: (e: string) => void;
 }) {
-  const [verificationCode, setVerificationCode] = useState<string>('');
   const { connect, sendVerificationEmail } = useEmbeddedWallet();
 
-  const handleEmailEntered = async () => {
-    if (!email) {
+  const handleEmailEntered = async (_email: string) => {
+    if (!_email) {
       alert('Please enter an email');
       return;
     }
+    setEmail(_email);
     setLoginState('sending_email');
-    await sendVerificationEmail({ email });
+    await sendVerificationEmail({ email: _email });
     setLoginState('email_verification');
   };
 
-  const handleEmailVerification = async () => {
+  const handleEmailVerification = async (
+    email: string,
+    verificationCode: string
+  ) => {
     try {
-      setLoginState('processing');
+      console.log({ email, verificationCode });
       if (!email || !verificationCode) {
         alert('Please enter an verification code');
-        setLoginState('init');
+        // setLoginState('init');
         return;
       }
+      setLoginState('processing');
       const personalWallet = await connect({
         strategy: 'email_verification',
         email,
@@ -613,59 +617,132 @@ export default function EmailSignIn({
   if (loginState === 'email_verification') {
     return (
       <>
-        <p style={{ color: '#333' }}>
-          Enter the verification code sent to your email
-        </p>
-        <CustomInput
-          placeholder="Enter verification code"
-          pattern="\d*"
-          minLength="6"
-          maxLength="6"
-          value={verificationCode}
-          onChange={(e: any) => setVerificationCode(e.target.value)}
-        />
-        <Button
-          onClick={handleEmailVerification}
-          variant={'primaryOutline'}
-          w="100%"
-          mb="1rem"
+        <Formik
+          initialValues={{
+            code: '',
+            email: email,
+          }}
+          validationSchema={Yup.object().shape({
+            code: Yup.string().required('Required'),
+            email: Yup.string(),
+          })}
+          onSubmit={async (values) => {
+            console.log({ values, email });
+            await handleEmailVerification(values.email, values.code);
+          }}
         >
-          Verify
-        </Button>
-        <a onClick={() => setLoginState('init')}>
+          {({
+            handleSubmit,
+            errors,
+            touched,
+            values,
+            setFieldTouched,
+            setFieldValue,
+          }) => (
+            <form onSubmit={handleSubmit}>
+              <FormControl
+                isInvalid={Boolean(errors.code) && Boolean(touched?.code)}
+              >
+                <FormLabel style={{ color: '#333' }}>
+                  Enter the verification code sent to your email
+                </FormLabel>
+                <Field
+                  as={CustomInput}
+                  placeholder="Enter verification code"
+                  pattern="\d*"
+                  minLength="6"
+                  maxLength="6"
+                  name="code"
+                  id="code"
+                />
+                <FormErrorMessage
+                  position="absolute"
+                  bottom="0.25rem"
+                  left={'0.25rem'}
+                >
+                  {errors?.code?.toString()}
+                </FormErrorMessage>
+              </FormControl>
+              <Button
+                type="submit"
+                variant={'primaryOutline'}
+                w="100%"
+                mb="1rem"
+              >
+                Verify
+              </Button>
+            </form>
+          )}
+        </Formik>
+        <Box onClick={() => setLoginState('init')}>
           <p
             style={{ color: '#6E3FF3', cursor: 'pointer', textAlign: 'center' }}
           >
             Go Back
           </p>
-        </a>
+        </Box>
       </>
     );
   }
 
   return (
     <>
-      <Text padding={'0.5rem'}>
-        Sign in with email
-        <span style={{ color: '#6E3FF3', fontSize: '1.2rem' }}>*</span>
-      </Text>
-      <CustomInput
-        type="email"
-        placeholder="Enter your email address"
-        value={email}
-        onChange={(e: any) => setEmail(e.target.value)}
-      />
-      <Button
-        w="100%"
-        fontWeight={'500'}
-        fontSize={'14px'}
-        lineHeight={1.5}
-        variant={'primaryOutline'}
-        onClick={handleEmailEntered}
-        mb="0.5rem"
+      <Formik
+        initialValues={{
+          email: '',
+        }}
+        validationSchema={Yup.object().shape({
+          email: Yup.string().required('Required'),
+        })}
+        onSubmit={async (values) => {
+          await handleEmailEntered(values.email);
+        }}
       >
-        Sign in with email address
-      </Button>
+        {({
+          handleSubmit,
+          errors,
+          touched,
+          values,
+          setFieldTouched,
+          setFieldValue,
+        }) => (
+          <form onSubmit={handleSubmit}>
+            <FormControl
+              isInvalid={Boolean(errors.email) && Boolean(touched?.email)}
+            >
+              <FormLabel padding={'0.5rem'} htmlFor="email">
+                Sign in with email
+                <span style={{ color: '#6E3FF3', fontSize: '1.2rem' }}>*</span>
+              </FormLabel>
+              <Field
+                as={CustomInput}
+                type="email"
+                placeholder="Enter your email address"
+                name="email"
+                id="email"
+              />
+              <FormErrorMessage
+                position="absolute"
+                bottom="0.25rem"
+                left={'0.25rem'}
+              >
+                {errors?.email?.toString()}
+              </FormErrorMessage>
+            </FormControl>
+            <Button
+              w="100%"
+              fontWeight={'500'}
+              fontSize={'14px'}
+              lineHeight={1.5}
+              variant={'primaryOutline'}
+              type="submit"
+              mb="0.5rem"
+            >
+              Sign in with email address
+            </Button>
+          </form>
+        )}
+      </Formik>
     </>
   );
 }

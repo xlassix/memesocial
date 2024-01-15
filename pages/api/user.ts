@@ -157,7 +157,7 @@ export async function POST(req: NextApiRequest, res: NextApiResponse, user: { ad
         },
         data: {
             twitter: payload.x,
-            profileDiscription: payload.description,
+            profileDescription: payload.description,
             email: payload.email,
             tiktok: payload.tiktok,
             instagram: payload.instagram,

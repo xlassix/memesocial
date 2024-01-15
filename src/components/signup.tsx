@@ -67,6 +67,7 @@ export const SignUp = () => {
       const sig = await personalWallet.signMessage(
         buildSignMessage(address.toLowerCase(), userData.time)
       );
+
       const { user }: { user?: IUser } = await signUpAPI({
         address,
         signature: sig,
@@ -82,6 +83,20 @@ export const SignUp = () => {
       setLoginState('init');
       console.log(e, e?.response?.data?.errors);
       setError(e?.response?.data?.errors[0] ?? e.message);
+    }
+  };
+
+  const emailSignInDone = async (address: string, sig: string) => {
+    const { user }: { user?: IUser } = await signUpAPI({
+      address,
+      signature: sig,
+      time: userData.time,
+    });
+    mutate('/auth');
+    if (user?.profileDescription) {
+      setModalStatus(false);
+    } else {
+      setLoginState('done');
     }
   };
 
@@ -184,6 +199,8 @@ export const SignUp = () => {
                         </>
                       )}
                       <EmailSignIn
+                        emailSignInDone={emailSignInDone}
+                        time={userData.time}
                         loginState={loginState}
                         setLoginState={setLoginState}
                         email={email}
@@ -542,11 +559,15 @@ export default function EmailSignIn({
   setLoginState,
   email,
   setEmail,
+  time,
+  emailSignInDone,
 }: {
   loginState: LoginStatus;
   email: string;
+  time: string;
   setEmail: (e: string) => void;
   setLoginState: (e: LoginStatus) => void;
+  emailSignInDone: (address: string, sig: string) => void;
 }) {
   const [verificationCode, setVerificationCode] = useState<string>('');
   const { connect, sendVerificationEmail } = useEmbeddedWallet();
@@ -562,11 +583,23 @@ export default function EmailSignIn({
   };
 
   const handleEmailVerification = async () => {
+    setLoginState('processing');
     if (!email || !verificationCode) {
       alert('Please enter an verification code');
+      setLoginState('init');
       return;
     }
-    await connect({ strategy: 'email_verification', email, verificationCode });
+    const personalWallet = await connect({
+      strategy: 'email_verification',
+      email,
+      verificationCode,
+    });
+    const address = await personalWallet.getAddress();
+    setLoginState('awaiting_auth_sign');
+    const sig = await personalWallet.signMessage(
+      buildSignMessage(address.toLowerCase(), time)
+    );
+    await emailSignInDone(address, sig);
   };
 
   if (loginState === 'email_verification') {

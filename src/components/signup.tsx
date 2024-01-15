@@ -221,7 +221,7 @@ export const SignUp = () => {
                   lineHeight={1.5}
                   color="#868C98"
                 >
-                  By continuing you agree to Afrimeme&apos;s Terms of Service
+                  By continuing you agree to MemeSocial&apos;s Terms of Service
                   and Privacy Policy
                 </Text>
               ) : null}

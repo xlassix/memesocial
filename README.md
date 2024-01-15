@@ -1,7 +1,7 @@
 
-# Afrimeme
+# MemeSocial
 
-Welcome to Afrimeme, a dynamic and engaging platform dedicated to sharing and enjoying memes. Our application is designed to cater to a diverse audience with a focus on African-themed memes, bringing laughter and a sense of community. Check out our live application here: [memeSocial.vercel.app](https://memeSocial.vercel.app).
+Welcome to MemeSocial, a dynamic and engaging platform dedicated to sharing and enjoying memes. Our application is designed to cater to a diverse audience with a focus on African-themed memes, bringing laughter and a sense of community. Check out our live application here: [memeSocial.vercel.app](https://memeSocial.vercel.app).
 
 ## Features
 
@@ -20,7 +20,7 @@ Welcome to Afrimeme, a dynamic and engaging platform dedicated to sharing and en
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/xlassix/Afrimeme.git
+   git clone https://github.com/xlassix/MemeSocial.git
    ```
 2. Install NPM packages
    ```sh
@@ -52,4 +52,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Oki Ayobami - [@xlassix](https://linkedin.com/in/xlassix)
 
-Project Link: [https://github.com/xlassix/Afrimeme](https://github.com/xlassix/Afrimeme)
+Project Link: [https://github.com/xlassix/MemeSocial](https://github.com/xlassix/MemeSocial)

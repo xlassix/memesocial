@@ -98,7 +98,7 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
 
     res.setHeader(
         "Set-Cookie",
-        cookie.serialize(process.env.accessTokenName ?? "AFRIMEME", token, {
+        cookie.serialize(process.env.accessTokenName ?? "MemeSocial", token, {
             httpOnly: true,
             maxAge: 8 * 60 * 60,
             path: "/",
@@ -119,7 +119,7 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
 export async function DELETE(req: NextApiRequest, res: NextApiResponse) {
     res.setHeader(
         "Set-Cookie",
-        cookie.serialize(process.env.accessTokenName ?? "AFRIMEME", "", {
+        cookie.serialize(process.env.accessTokenName ?? "MemeSocial", "", {
             httpOnly: true,
             maxAge: 1 * 60,
             path: "/",

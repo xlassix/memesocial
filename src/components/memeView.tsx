@@ -241,7 +241,7 @@ export const MemeView = ({ isLoading, data }: Props) => {
                 {/* </a> */}
                 <TwitterShareButton
                   url={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
-                  title={`AfriMeme-${viewMeme?.title}`}
+                  title={`MemeSocial-${viewMeme?.title}`}
                   blankTarget
                 >
                   <Flex
@@ -259,7 +259,7 @@ export const MemeView = ({ isLoading, data }: Props) => {
                 </TwitterShareButton>
                 <RedditShareButton
                   url={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
-                  title={`AfriMeme-${viewMeme?.title}`}
+                  title={`MemeSocial-${viewMeme?.title}`}
                   blankTarget
                 >
                   <Flex
@@ -277,7 +277,7 @@ export const MemeView = ({ isLoading, data }: Props) => {
                 </RedditShareButton>
                 <FacebookShareButton
                   url={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
-                  title={`AfriMeme-${viewMeme?.title}`}
+                  title={`MemeSocial-${viewMeme?.title}`}
                   blankTarget
                 >
                   <Flex
@@ -295,7 +295,7 @@ export const MemeView = ({ isLoading, data }: Props) => {
                 </FacebookShareButton>
                 <WhatsappShareButton
                   url={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
-                  title={`AfriMeme-${viewMeme?.title}`}
+                  title={`MemeSocial-${viewMeme?.title}`}
                   blankTarget
                 >
                   <Flex
@@ -516,7 +516,7 @@ export const MemeViewUser = ({ isLoading, data }: Props) => {
                 {/* </a> */}
                 <TwitterShareButton
                   url={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
-                  title={`AfriMeme-${viewMeme?.title}`}
+                  title={`MemeSocial-${viewMeme?.title}`}
                   blankTarget
                 >
                   <Flex
@@ -534,7 +534,7 @@ export const MemeViewUser = ({ isLoading, data }: Props) => {
                 </TwitterShareButton>
                 <RedditShareButton
                   url={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
-                  title={`AfriMeme-${viewMeme?.title}`}
+                  title={`MemeSocial-${viewMeme?.title}`}
                   blankTarget
                 >
                   <Flex
@@ -552,7 +552,7 @@ export const MemeViewUser = ({ isLoading, data }: Props) => {
                 </RedditShareButton>
                 <FacebookShareButton
                   url={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
-                  title={`AfriMeme-${viewMeme?.title}`}
+                  title={`MemeSocial-${viewMeme?.title}`}
                   blankTarget
                 >
                   <Flex
@@ -570,7 +570,7 @@ export const MemeViewUser = ({ isLoading, data }: Props) => {
                 </FacebookShareButton>
                 <WhatsappShareButton
                   url={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
-                  title={`AfriMeme-${viewMeme?.title}`}
+                  title={`MemeSocial-${viewMeme?.title}`}
                   blankTarget
                 >
                   <Flex

@@ -12,7 +12,7 @@ const ProfilePage = ({ fallback, search }: any) => {
     const { isLoading, data, user } = useSearchUserMeme(search)
     const { userData, isLoading: isloadingUser } = useMe()
     useEffect(() => {
-        if ((!isLoading && isloadingUser) && user.address != userData?.user?.address) {
+        if ((!isLoading && isloadingUser) && user.address.toLowerCase() != userData?.user?.address.toLowerCase()) {
             router.replace("/")
         }
     },
@@ -21,7 +21,7 @@ const ProfilePage = ({ fallback, search }: any) => {
 
     return <SWRConfig value={{ fallback }}>
         <Flex px="2rem" gap="1rem" justifyContent={"center"} position="sticky" display={isLargerThan768 ? "flex" : "block"}>
-            <ProfileDetails isLargerThan768={isLargerThan768} isLoading={isloadingUser} user={user} />
+            <ProfileDetails isLargerThan768={isLargerThan768} isLoading={isLoading} user={user} />
             <Box flexBasis={"80%"} >
                 <MemeViewUser isLoading={isLoading} data={data} />
             </Box>

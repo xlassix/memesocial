@@ -36,7 +36,10 @@ export const ProfileDetails = ({
             objectFit="cover"
             mx="auto"
             alt=""
-            src={user?.avatar}
+            src={
+              user?.avatar ??
+              'https://gateway.lighthouse.storage/ipfs/QmanFHjUQXbpgg8vC86np7WcyNDxnVJTsrK3NjZePQjGzM'
+            }
           />
           <Text
             fontSize={'16px'}

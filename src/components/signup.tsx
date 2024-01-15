@@ -321,6 +321,7 @@ export const UserInfoForm = ({
                   <Button
                     variant={'primaryOutline'}
                     w="100%"
+                    mt="1rem"
                     onClick={async () => {
                       try {
                         setLoginState('processing');

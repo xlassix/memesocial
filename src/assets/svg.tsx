@@ -298,10 +298,10 @@ export const SocialInstagram = (props: any) => {
           gradientTransform="matrix(0 -17.8393 16.592 0 7.781 22.386)"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FD5" />
-          <stop offset=".1" stop-color="#FD5" />
-          <stop offset=".5" stop-color="#FF543E" />
-          <stop offset="1" stop-color="#C837AB" />
+          <stop stopColor="#FD5" />
+          <stop offset=".1" stopColor="#FD5" />
+          <stop offset=".5" stopColor="#FF543E" />
+          <stop offset="1" stopColor="#C837AB" />
         </radialGradient>
         <radialGradient
           id="SocialInstagramb"
@@ -311,9 +311,9 @@ export const SocialInstagram = (props: any) => {
           gradientTransform="matrix(1.56512 7.81915 -32.23086 6.45148 -.015 4.298)"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#3771C8" />
-          <stop offset=".128" stop-color="#3771C8" />
-          <stop offset="1" stop-color="#60F" stop-opacity="0" />
+          <stop stopColor="#3771C8" />
+          <stop offset=".128" stopColor="#3771C8" />
+          <stop offset="1" stopColor="#60F" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="SocialInstagramc"
@@ -323,10 +323,10 @@ export const SocialInstagram = (props: any) => {
           gradientTransform="matrix(0 -17.8393 16.592 0 7.781 22.386)"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FD5" />
-          <stop offset=".1" stop-color="#FD5" />
-          <stop offset=".5" stop-color="#FF543E" />
-          <stop offset="1" stop-color="#C837AB" />
+          <stop stopColor="#FD5" />
+          <stop offset=".1" stopColor="#FD5" />
+          <stop offset=".5" stopColor="#FF543E" />
+          <stop offset="1" stopColor="#C837AB" />
         </radialGradient>
         <radialGradient
           id="SocialInstagramd"
@@ -336,9 +336,9 @@ export const SocialInstagram = (props: any) => {
           gradientTransform="matrix(1.56512 7.81915 -32.23086 6.45148 -.015 4.298)"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#3771C8" />
-          <stop offset=".128" stop-color="#3771C8" />
-          <stop offset="1" stop-color="#60F" stop-opacity="0" />
+          <stop stopColor="#3771C8" />
+          <stop offset=".128" stopColor="#3771C8" />
+          <stop offset="1" stopColor="#60F" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="SocialInstagrame"
@@ -348,10 +348,10 @@ export const SocialInstagram = (props: any) => {
           gradientTransform="matrix(0 -17.8393 16.592 0 7.781 22.386)"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FD5" />
-          <stop offset=".1" stop-color="#FD5" />
-          <stop offset=".5" stop-color="#FF543E" />
-          <stop offset="1" stop-color="#C837AB" />
+          <stop stopColor="#FD5" />
+          <stop offset=".1" stopColor="#FD5" />
+          <stop offset=".5" stopColor="#FF543E" />
+          <stop offset="1" stopColor="#C837AB" />
         </radialGradient>
         <radialGradient
           id="SocialInstagramf"
@@ -361,9 +361,9 @@ export const SocialInstagram = (props: any) => {
           gradientTransform="matrix(1.56512 7.81915 -32.23086 6.45148 -.015 4.298)"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#3771C8" />
-          <stop offset=".128" stop-color="#3771C8" />
-          <stop offset="1" stop-color="#60F" stop-opacity="0" />
+          <stop stopColor="#3771C8" />
+          <stop offset=".128" stopColor="#3771C8" />
+          <stop offset="1" stopColor="#60F" stopOpacity="0" />
         </radialGradient>
       </defs>
     </svg>

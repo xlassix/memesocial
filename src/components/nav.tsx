@@ -53,7 +53,7 @@ const Nav = (props: any) => {
         w="100%"
         alignItems="center"
         justifyContent="space-between"
-        padding={isLargerThan768 ? '1rem' : '1rem 0'}
+        padding={isLargerThan768 ? '1rem' : '1rem 0.5rem'}
         border=""
         sx={{
           caretColor: 'transparent',
@@ -107,7 +107,10 @@ const Nav = (props: any) => {
                         aspectRatio={'1 / 1'}
                         objectFit="cover"
                         alt=""
-                        src={userData?.user?.avatar}
+                        src={
+                          userData?.user?.avatar ??
+                          'https://gateway.lighthouse.storage/ipfs/QmanFHjUQXbpgg8vC86np7WcyNDxnVJTsrK3NjZePQjGzM'
+                        }
                       />
                     ) : null}
                   </Flex>
@@ -127,7 +130,7 @@ const Nav = (props: any) => {
                     }}
                     fontSize={'1rem'}
                     onClick={() => {
-                      router.push(`/user/${address}`);
+                      router.push(`/user/me`);
                     }}
                   >
                     Profile

@@ -5,13 +5,16 @@ import { Box, Flex, useMediaQuery } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { ProfileDetails } from '@/components/profileDetail';
+import { usePathname } from 'next/navigation'
 
 
-const UserPage = ({ fallback, search, params }: any) => {
+const UserPage = (props: any) => {
     const router = useRouter()
-    const { isLoading, data, user } = useSearchUserMeme(search, params?.userAddress)
+    const pathname = usePathname()
+    const { isLoading, data, user } = useSearchUserMeme(props.search, pathname?.split("/")?.at(2))
+    // console.log({ isLoading, address: user?.address, pathname, data: pathname?.split("/")?.at(2) })
     useEffect(() => {
-        if (!isLoading && !user?.address) {
+        if (!isLoading && !user?.address && pathname) {
             router.replace("/user/404")
         }
     },
@@ -27,23 +30,5 @@ const UserPage = ({ fallback, search, params }: any) => {
         </Flex>
     </SWRConfig >
 };
-
-export async function getStaticPaths() {
-    return {
-        paths: [
-            '/user/0x000',
-        ],
-        fallback: true,
-    }
-}
-
-
-export async function getStaticProps(data: any) {
-    return {
-        props: {
-            params: data.params,
-        },
-    }
-}
 
 export default UserPage;

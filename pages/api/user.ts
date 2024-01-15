@@ -3,6 +3,7 @@ import prismaClient from "@/lib/prisma";
 import { validateRoute } from "@/lib/validate";
 import { IUser } from "@/shared/hooks";
 import { NextApiRequest, NextApiResponse } from "next";
+import { removeEmptyStringProperties } from "@/lib/helper"
 
 import * as Yup from 'yup';
 
@@ -156,12 +157,14 @@ export async function POST(req: NextApiRequest, res: NextApiResponse, user: { ad
             address: user.address
         },
         data: {
-            twitter: payload.x,
-            profileDescription: payload.description,
-            email: payload.email,
-            tiktok: payload.tiktok,
-            instagram: payload.instagram,
-            avatar: payload.avatar
+            ...removeEmptyStringProperties({
+                twitter: payload.x,
+                profileDescription: payload.description,
+                email: payload.email,
+                tiktok: payload.tiktok,
+                instagram: payload.instagram,
+                avatar: payload.avatar
+            })
         }
     })
     return res

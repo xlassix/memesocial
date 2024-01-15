@@ -1,7 +1,7 @@
 
 # Afrimeme
 
-Welcome to Afrimeme, a dynamic and engaging platform dedicated to sharing and enjoying memes. Our application is designed to cater to a diverse audience with a focus on African-themed memes, bringing laughter and a sense of community. Check out our live application here: [afrimeme.vercel.app](https://afrimeme.vercel.app).
+Welcome to Afrimeme, a dynamic and engaging platform dedicated to sharing and enjoying memes. Our application is designed to cater to a diverse audience with a focus on African-themed memes, bringing laughter and a sense of community. Check out our live application here: [memeSocial.vercel.app](https://memeSocial.vercel.app).
 
 ## Features
 

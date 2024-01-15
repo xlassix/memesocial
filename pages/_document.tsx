@@ -9,7 +9,7 @@ const Document = () => {
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <title>MemeAfrica</title>
+      <title>Meme Social</title>
       <body>
         <Main />
         <NextScript />

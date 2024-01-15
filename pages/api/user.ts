@@ -30,7 +30,7 @@ type UserInfo = {
 
 
 export async function GET(req: NextApiRequest, res: NextApiResponse, user?: { address: string }) {
-    const url = new URL(req.url?.startsWith("/") ? `https://afrimeme.com/${req.url ?? ""}` : "")
+    const url = new URL(req.url?.startsWith("/") ? `https://memeSocial.com/${req.url ?? ""}` : "")
     const data = url.searchParams.get('search') ?? '';
     const userAddress = (url.searchParams.get('address') ?? user?.address ?? "").toLowerCase()
     if (!userAddress) {

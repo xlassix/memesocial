@@ -7,7 +7,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import * as Yup from 'yup';
 
 export async function GET(req: NextApiRequest, res: NextApiResponse) {
-    const data = new URL(req.url?.startsWith("/") ? `https://afrimeme.com/${req.url ?? ""}` : "").searchParams.get('search') ?? '';
+    const data = new URL(req.url?.startsWith("/") ? `https://memeSocial.com/${req.url ?? ""}` : "").searchParams.get('search') ?? '';
     let memes;
     if (!data.includes(' ')) {
         memes = await prismaClient.files.findMany({

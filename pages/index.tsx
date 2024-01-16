@@ -31,7 +31,7 @@ const LandingPage = ({ fallback, search }: any) => {
         itemProp="image"
         content="https://afrimeme.vercel.app/android-chrome-512x512.png"
       />
-      <meta property="og:url" content="https://gruve.events" />
+      <meta property="og:url" content="https://memesocial.vercel.app" />
 
       <meta property="og:type" content="website" />
       <meta property="og:updated_time" content="1671998400" />
@@ -52,8 +52,6 @@ const LandingPage = ({ fallback, search }: any) => {
         name="twitter:image"
         content="https://afrimeme.vercel.app/android-chrome-512x512.png"
       />
-
-      <title>Home | Gruve</title>
     </Head>
     <MemeView isLoading={isLoading} data={data} />
   </SWRConfig >

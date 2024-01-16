@@ -1,0 +1,21 @@
+{
+ "name": "Memesocial",
+ "short_name": "Memesocial",
+ "start_url": "/",
+ "display": "standalone",
+ "background_color": "#6E3FF3",
+ "description": "Welcome to Memesocial, a vibrant community dedicated to memes! Here, you can share your favorite memes, discover new ones, and connect with fellow meme enthusiasts. Whether you're looking for humor, inspiration, or a good laugh, Memesocial has got you covered. Join us today and become part of the meme revolution!",
+ "icons": [
+   {
+     "src": "./favicon-32x32.png",
+     "sizes": "32x32",
+     "type": "image/png"
+   },
+   {
+     "src": "https://afrimeme.vercel.app/android-chrome-512x512.png",
+     "sizes": "512x512",
+     "type": "image/png"
+   }
+ ],
+ "theme_color": "#6E3FF3"
+}

@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import { client } from '@/lib/client';
+import { useStorageUpload } from '@thirdweb-dev/react';
 import AvatarEditor from 'react-avatar-editor';
 import { Picture, ProfileUploadPlaceHolder } from '@/assets/svg';
 type Props = {
@@ -27,6 +28,8 @@ type Props = {
 };
 
 export const UploadMeme = ({ saveData, isInvalid }: Props) => {
+  const { mutateAsync: upload } = useStorageUpload();
+
   const toast = useToast();
   const [data, setData] = useState<any>();
   const [isUploadDone, setUploadDone] = useState<boolean>(false);
@@ -38,11 +41,21 @@ export const UploadMeme = ({ saveData, isInvalid }: Props) => {
     setProgress(0);
     setUploadDone(false);
     try {
+      // console.log(await upload({
+      //   data: [file], options: {
+      //     onProgress(event) {
+      //       console.log(event)
+      //     },
+      //   }
+      // }))
       const _added = await client.add(file, {
         progress: (prog) => {
-          setProgress(prog / file.size);
+          setProgress(Math.max(0, prog / file.size - 0.01));
         },
       });
+
+      setProgress(1);
+      // throw new Error("Reached")
       return _added.path;
     } catch (e: any) {
       console.log(e.message);

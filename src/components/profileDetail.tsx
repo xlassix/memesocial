@@ -110,12 +110,21 @@ export const ProfileDetails = ({
                 <SocialTikTok height="2.5rem" padding="0.25rem" />
               </a>
             ) : null}
-            <LineShareButton
-              url={`https://memesocial.vercel.app/user/${user.address}`}
-              title={'check out my profile'}
+            <Text
+              onClick={async () => {
+                try {
+                  await navigator.share({
+                    title: 'MemeSocial',
+                    text: `Checkout ${user.twitter}'s Profile`,
+                    url: `https://memesocial.vercel.app/user/${user.address}`,
+                  });
+                } catch (e) {
+                  console.log(e);
+                }
+              }}
             >
               <ShareIcon height="2.5rem" padding="0.25rem" />
-            </LineShareButton>
+            </Text>
           </Flex>
         </Box>
       ) : null}

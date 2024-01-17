@@ -1,6 +1,12 @@
 import { Box, Flex, Image, Text } from '@chakra-ui/react';
-import { SocialInstagram, SocialTikTok, SocialXClear } from '@/assets/svg';
+import {
+  ShareIcon,
+  SocialInstagram,
+  SocialTikTok,
+  SocialXClear,
+} from '@/assets/svg';
 import { IUserDetails } from '@/shared/hooks';
+import { LineShareButton } from 'next-share';
 
 export const ProfileDetails = ({
   isLargerThan768,
@@ -104,6 +110,12 @@ export const ProfileDetails = ({
                 <SocialTikTok height="2.5rem" padding="0.25rem" />
               </a>
             ) : null}
+            <LineShareButton
+              url={`https://memesocial.vercel.app/user/${user.address}`}
+              title={'check out my profile'}
+            >
+              <ShareIcon height="2.5rem" padding="0.25rem" />
+            </LineShareButton>
           </Flex>
         </Box>
       ) : null}

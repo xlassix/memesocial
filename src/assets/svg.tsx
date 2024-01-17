@@ -677,6 +677,26 @@ export const SocialGoogle = (props: any) => {
   );
 };
 
+export const ShareIcon = (props: any) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      {...props}
+    >
+      <path
+        fill="#2196F3"
+        d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10Z"
+      />
+      <path
+        fill="#fff"
+        d="M16.837 11.469 13.4 14.182c-.3.238-.776.044-.776-.325v-1.57c-3.028.041-4.336.728-3.448 3.317.1.29-.28.509-.548.333C7.772 15.371 7 14.281 7 13.184c0-2.717 2.488-3.291 5.624-3.324V8.43c0-.37.476-.563.776-.326l3.437 2.714a.406.406 0 0 1 0 .65Z"
+      />
+    </svg>
+  );
+};
+
 export const SocialApple = (props: any) => {
   return (
     <svg

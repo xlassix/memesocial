@@ -1,5 +1,5 @@
 import { SWRConfig } from 'swr';
-import { useMe, useSearchUserMeme } from '@/shared/hooks';
+import {  useSearchUserMeme } from '@/shared/hooks';
 import { MemeViewUser } from '@/components/memeView';
 import { Box, Flex, useMediaQuery } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
@@ -13,13 +13,12 @@ const UserPage = (props: any) => {
     const router = useRouter()
     const pathname = usePathname()
     const { isLoading, data, user } = useSearchUserMeme(props.search, pathname?.split("/")?.at(2))
-    // console.log({ isLoading, address: user?.address, pathname, data: pathname?.split("/")?.at(2) })
     useEffect(() => {
         if (!isLoading && !user?.address && pathname) {
             router.replace("/user/404")
         }
     },
-        [isLoading, user])
+    [isLoading, user])
     const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
 
     return <SWRConfig value={{}}>
@@ -42,12 +41,12 @@ const UserPage = (props: any) => {
             />
             <meta
                 name="twitter:image"
-                content={`https://gateway.lighthouse.storage/ipfs/${user.avatar}?h=500&w=500`}
+                content={`https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${user.avatar}?h=500&w=500`}
             />
             <meta
                 property="og:image"
                 itemProp="image"
-                content={`https://gateway.lighthouse.storage/ipfs/${user.avatar}?h=500&w=500`}
+                content={`https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${user.avatar}?h=500&w=500`}
             />
         </Head> : null}
         <Flex px="2rem" gap="1rem" justifyContent={"center"} position="sticky" display={isLargerThan768 ? "flex" : "block"}>

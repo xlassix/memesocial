@@ -48,34 +48,45 @@ function getFileExtension(fileType: string) {
   return ''; // Return empty string if the type does not have a subtype
 }
 
-const DownloadLink = async (viewMeme: ISearchMeme) => {
-  try {
-    const url = `https://gateway.lighthouse.storage/ipfs/${
-      viewMeme?.fileId
-    }?filename=${viewMeme?.title}.${getFileExtension(viewMeme?.type ?? '')}`;
-    const response = await fetch(url);
-    if (!response.ok)
-      throw new Error(`Failed to download file: ${response.statusText}`);
-
-    const blob = await response.blob();
-    const blobUrl = window.URL.createObjectURL(blob);
-
-    const link = document.createElement('a');
-    link.href = blobUrl;
-    link.download = `${viewMeme?.title}.${getFileExtension(
-      viewMeme?.type ?? ''
-    )}`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(blobUrl);
-  } catch (error) {
-    console.error('Download error:', error);
-  }
-};
 export const MemeView = ({ isLoading, data }: Props) => {
   const [viewMeme, setViewAbleMeme] = useState<ISearchMeme | null>(null);
   const toast = useToast();
+
+  const DownloadLink = async (viewMeme: ISearchMeme) => {
+    try {
+      const url = `https://${
+        process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID
+      }.ipfscdn.io/ipfs/${viewMeme?.fileId}?filename=${
+        viewMeme?.title
+      }.${getFileExtension(viewMeme?.type ?? '')}`;
+      const response = await fetch(url);
+      if (!response.ok)
+        throw new Error(`Failed to download file: ${response.statusText}`);
+
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = `${viewMeme?.title}.${getFileExtension(
+        viewMeme?.type ?? ''
+      )}`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error: any) {
+      toast({
+        title: 'Download error',
+        description: `${error?.message}`,
+        status: 'error',
+        colorScheme: 'whatsapp',
+        position: 'top',
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
   return (
     <>
       {isLoading ? (
@@ -134,7 +145,7 @@ export const MemeView = ({ isLoading, data }: Props) => {
                       borderRadius={'10px'}
                       width="100%"
                       height="20rem"
-                      src={`https://gateway.lighthouse.storage/ipfs/${meme.fileId}`}
+                      src={`https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${meme.fileId}`}
                       fit="cover"
                       alt="data"
                     />
@@ -146,7 +157,7 @@ export const MemeView = ({ isLoading, data }: Props) => {
                       height="20rem"
                     >
                       <video
-                        src={`https://gateway.lighthouse.storage/ipfs/${meme.fileId}`}
+                        src={`https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${meme.fileId}`}
                         controls
                         style={{ maxWidth: '100%', maxHeight: '20erem' }}
                       />
@@ -193,7 +204,7 @@ export const MemeView = ({ isLoading, data }: Props) => {
                   borderRadius={'10px'}
                   objectFit="contain"
                   margin={'auto'}
-                  src={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
+                  src={`https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${viewMeme?.fileId}`}
                   alt="data"
                 />
               ) : (
@@ -205,7 +216,7 @@ export const MemeView = ({ isLoading, data }: Props) => {
                   maxW="100%"
                 >
                   <video
-                    src={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
+                    src={`https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${viewMeme?.fileId}`}
                     controls
                     style={{
                       maxWidth: '100%',
@@ -224,7 +235,7 @@ export const MemeView = ({ isLoading, data }: Props) => {
                 justifyContent={'center'}
                 margin={'1rem'}
               >
-                {/* <a id="downloadButton" href={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}?filename=${viewMeme?.title}.${getFileExtension(viewMeme?.type ?? "")}`} download> */}
+                {/* <a id="downloadButton" href={`https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${viewMeme?.fileId}?filename=${viewMeme?.title}.${getFileExtension(viewMeme?.type ?? "")}`} download> */}
                 <Flex
                   flexDirection="column"
                   padding="1rem"
@@ -240,7 +251,7 @@ export const MemeView = ({ isLoading, data }: Props) => {
                 </Flex>
                 {/* </a> */}
                 <TwitterShareButton
-                  url={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
+                  url={`https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${viewMeme?.fileId}`}
                   title={`MemeSocial-${viewMeme?.title}`}
                   blankTarget
                 >
@@ -258,7 +269,7 @@ export const MemeView = ({ isLoading, data }: Props) => {
                   </Flex>
                 </TwitterShareButton>
                 <RedditShareButton
-                  url={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
+                  url={`https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${viewMeme?.fileId}`}
                   title={`MemeSocial-${viewMeme?.title}`}
                   blankTarget
                 >
@@ -276,7 +287,7 @@ export const MemeView = ({ isLoading, data }: Props) => {
                   </Flex>
                 </RedditShareButton>
                 <FacebookShareButton
-                  url={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
+                  url={`https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${viewMeme?.fileId}`}
                   title={`MemeSocial-${viewMeme?.title}`}
                   blankTarget
                 >
@@ -294,7 +305,7 @@ export const MemeView = ({ isLoading, data }: Props) => {
                   </Flex>
                 </FacebookShareButton>
                 <WhatsappShareButton
-                  url={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
+                  url={`https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${viewMeme?.fileId}`}
                   title={`MemeSocial-${viewMeme?.title}`}
                   blankTarget
                 >
@@ -321,7 +332,7 @@ export const MemeView = ({ isLoading, data }: Props) => {
                   border="1.03px solid #F6F8FA"
                   onClick={async () => {
                     await navigator.clipboard.writeText(
-                      `https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`
+                      `https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${viewMeme?.fileId}`
                     );
                     toast({
                       title: 'Copied MemeLink',
@@ -409,7 +420,7 @@ export const MemeViewUser = ({ isLoading, data }: Props) => {
                       borderRadius={'10px'}
                       width="100%"
                       height="20rem"
-                      src={`https://gateway.lighthouse.storage/ipfs/${meme.fileId}`}
+                      src={`https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${meme.fileId}`}
                       fit="cover"
                       alt="data"
                     />
@@ -421,7 +432,7 @@ export const MemeViewUser = ({ isLoading, data }: Props) => {
                       height="20rem"
                     >
                       <video
-                        src={`https://gateway.lighthouse.storage/ipfs/${meme.fileId}`}
+                        src={`https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${meme.fileId}`}
                         controls
                         style={{ maxWidth: '100%', maxHeight: '20erem' }}
                       />
@@ -468,7 +479,7 @@ export const MemeViewUser = ({ isLoading, data }: Props) => {
                   borderRadius={'10px'}
                   objectFit="contain"
                   margin={'auto'}
-                  src={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
+                  src={`https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${viewMeme?.fileId}`}
                   alt="data"
                 />
               ) : (
@@ -480,7 +491,7 @@ export const MemeViewUser = ({ isLoading, data }: Props) => {
                   maxW="100%"
                 >
                   <video
-                    src={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
+                    src={`https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${viewMeme?.fileId}`}
                     controls
                     style={{
                       maxWidth: '100%',
@@ -499,7 +510,7 @@ export const MemeViewUser = ({ isLoading, data }: Props) => {
                 justifyContent={'center'}
                 margin={'1rem'}
               >
-                {/* <a id="downloadButton" href={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}?filename=${viewMeme?.title}.${getFileExtension(viewMeme?.type ?? "")}`} download> */}
+                {/* <a id="downloadButton" href={`https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${viewMeme?.fileId}?filename=${viewMeme?.title}.${getFileExtension(viewMeme?.type ?? "")}`} download> */}
                 <Flex
                   flexDirection="column"
                   padding="1rem"
@@ -515,7 +526,7 @@ export const MemeViewUser = ({ isLoading, data }: Props) => {
                 </Flex>
                 {/* </a> */}
                 <TwitterShareButton
-                  url={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
+                  url={`https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${viewMeme?.fileId}`}
                   title={`MemeSocial-${viewMeme?.title}`}
                   blankTarget
                 >
@@ -533,7 +544,7 @@ export const MemeViewUser = ({ isLoading, data }: Props) => {
                   </Flex>
                 </TwitterShareButton>
                 <RedditShareButton
-                  url={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
+                  url={`https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${viewMeme?.fileId}`}
                   title={`MemeSocial-${viewMeme?.title}`}
                   blankTarget
                 >
@@ -551,7 +562,7 @@ export const MemeViewUser = ({ isLoading, data }: Props) => {
                   </Flex>
                 </RedditShareButton>
                 <FacebookShareButton
-                  url={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
+                  url={`https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${viewMeme?.fileId}`}
                   title={`MemeSocial-${viewMeme?.title}`}
                   blankTarget
                 >
@@ -569,7 +580,7 @@ export const MemeViewUser = ({ isLoading, data }: Props) => {
                   </Flex>
                 </FacebookShareButton>
                 <WhatsappShareButton
-                  url={`https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`}
+                  url={`https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${viewMeme?.fileId}`}
                   title={`MemeSocial-${viewMeme?.title}`}
                   blankTarget
                 >
@@ -596,7 +607,7 @@ export const MemeViewUser = ({ isLoading, data }: Props) => {
                   border="1.03px solid #F6F8FA"
                   onClick={async () => {
                     await navigator.clipboard.writeText(
-                      `https://gateway.lighthouse.storage/ipfs/${viewMeme?.fileId}`
+                      `https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${viewMeme?.fileId}`
                     );
                     toast({
                       title: 'Copied MemeLink',

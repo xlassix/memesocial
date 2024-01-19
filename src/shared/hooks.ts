@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import apiHandler from './api';
-import { ILogin } from '../../pages/api/auth';
+import { ILogin } from '@/pages/api/auth';
 
 export interface ISearchMeme {
   fileId: string;

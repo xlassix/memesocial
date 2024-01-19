@@ -1,6 +1,5 @@
 import {
   ChakraProps,
-  ChakraStyledOptions,
   Input,
   InputGroup,
   InputLeftAddon,

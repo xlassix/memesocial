@@ -14,7 +14,6 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
-import { client } from '@/lib/client';
 import { useStorageUpload } from '@thirdweb-dev/react';
 import AvatarEditor from 'react-avatar-editor';
 import { Picture, ProfileUploadPlaceHolder } from '@/assets/svg';

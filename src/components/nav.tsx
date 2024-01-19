@@ -1,52 +1,27 @@
-import React, { useEffect, useContext, useState } from 'react';
-import {
-  Button,
-  IconButton,
-  MenuDivider,
-  MenuItemOption,
-  MenuOptionGroup,
-  Image,
-  Text,
-  useMediaQuery,
-} from '@chakra-ui/react';
-import { Stack, StackDivider } from '@chakra-ui/layout';
+import React from 'react';
+import { Button, Image, useMediaQuery , Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import { Box, Flex } from '@chakra-ui/layout';
-import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import { LogoSVG } from '../assets/svg';
 import { useRouter } from 'next/navigation';
 import { Field, Formik } from 'formik';
 import { SearchInput } from './form';
 import { UploadModal } from './uploadModal';
-import {
-  useAddress,
-  useConnect,
-  useConnectionStatus,
-  useDisconnect,
-} from '@thirdweb-dev/react';
+import { useDisconnect } from '@thirdweb-dev/react';
 import { SignUp } from './signup';
 import { useMe } from '@/shared/hooks';
 import apiHandler from '@/shared/api';
-import { mutate, useSWRConfig } from 'swr';
+import { useSWRConfig } from 'swr';
 
 const Nav = (props: any) => {
   const { mutate } = useSWRConfig();
   const disconnect = useDisconnect();
-  const connectionStatus = useConnectionStatus();
-  const address = useAddress();
   const router = useRouter();
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
   const { userData } = useMe();
-  // console.log({
-  //   connectionStatus,
-  //   address,
-  //   userData,
-  //   data: userData?.user?.avatar && userData?.user?.address,
-  // });
 
   return (
     <>
       <Flex
-        position="sticky"
         top="0"
         bg="white"
         zIndex={'5'}
@@ -72,7 +47,7 @@ const Nav = (props: any) => {
                 props.setSearch(values.search);
               }}
             >
-              {({ handleSubmit, errors, touched, values }) => (
+              {({ handleSubmit }) => (
                 <>
                   <form onSubmit={handleSubmit}>
                     <Field
@@ -209,7 +184,7 @@ const Nav = (props: any) => {
               props.setSearch(values.search);
             }}
           >
-            {({ handleSubmit, errors, touched, values }) => (
+            {({ handleSubmit }) => (
               <>
                 <form onSubmit={handleSubmit}>
                   <Field

@@ -27,14 +27,13 @@ export const validateRoute = (
           throw new Error('Not real user');
         }
       } catch (e: any) {
-        console.log(e?.message);
         return res.status(401).end();
       }
 
       return handler(req, res, user);
     }
 
-    return mode == 'allowAnonymous'
+    return mode === 'allowAnonymous'
       ? handler(req, res, null)
       : res.status(401).end();
   };

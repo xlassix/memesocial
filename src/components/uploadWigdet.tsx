@@ -13,8 +13,7 @@ import {
   VStack,
   useToast,
 } from '@chakra-ui/react';
-import { useEffect, useRef, useState } from 'react';
-import { client } from '@/lib/client';
+import { useRef, useState } from 'react';
 import { useStorageUpload } from '@thirdweb-dev/react';
 import AvatarEditor from 'react-avatar-editor';
 import { Picture, ProfileUploadPlaceHolder } from '@/assets/svg';
@@ -28,37 +27,36 @@ type Props = {
 };
 
 export const UploadMeme = ({ saveData, isInvalid }: Props) => {
-  const { mutateAsync: upload } = useStorageUpload();
-
   const toast = useToast();
   const [data, setData] = useState<any>();
   const [isUploadDone, setUploadDone] = useState<boolean>(false);
   const [progress, setProgress] = useState(0);
   const [previewUrl, setPreviewUrl] = useState<any>();
-  const [images, setImages] = useState([]);
+  const { mutateAsync: upload } = useStorageUpload({
+    uploadWithoutDirectory: true,
+    onProgress(event: { progress: number; total: number }) {
+      setProgress(Math.max(0, event.progress / event.total - 0.01));
+    },
+  });
 
   const handleUpload = async (file: any) => {
     setProgress(0);
     setUploadDone(false);
     try {
-      // console.log(await upload({
-      //   data: [file], options: {
-      //     onProgress(event) {
-      //       console.log(event)
-      //     },
-      //   }
-      // }))
-      const _added = await client.add(file, {
-        progress: (prog) => {
-          setProgress(Math.max(0, prog / file.size - 0.01));
-        },
+      const _added = await upload({
+        data: [file],
       });
-
       setProgress(1);
-      // throw new Error("Reached")
-      return _added.path;
+      return _added[0].slice(7);
     } catch (e: any) {
-      console.log(e.message);
+      toast({
+        title: 'Upload Error',
+        description: `${e.message}`,
+        status: 'warning',
+        position: 'top',
+        duration: 9000,
+        isClosable: true,
+      });
     }
     setUploadDone(true);
   };
@@ -96,7 +94,7 @@ export const UploadMeme = ({ saveData, isInvalid }: Props) => {
   const handleFileChange = async (event: any) => {
     const file = event.target.files[0];
     if (file) {
-      if (file?.size == 0) {
+      if (file?.size === 0) {
         toast({
           title: 'Unacceptable file',
           description: `File Size cant be Zero`,
@@ -163,7 +161,6 @@ export const UploadMeme = ({ saveData, isInvalid }: Props) => {
             }
           };
         } catch (e: any) {
-          console.log(e);
           toast({
             title: 'Unacceptable File',
             description: `${e.message}`,
@@ -277,7 +274,7 @@ export const UploadMeme = ({ saveData, isInvalid }: Props) => {
                 <video src={previewUrl} controls style={{ maxWidth: '100%' }} />
               </AspectRatio>
             )}
-            {progress != 1 && !isUploadDone ? (
+            {progress !== 1 && !isUploadDone ? (
               <Flex
                 position="absolute"
                 left="0"
@@ -328,19 +325,36 @@ export const ProfileAvatarEditor = ({ saveData, isInvalid }: any) => {
   const [modalState, setModalState] = useState(false);
   const elRef: any = useRef(null);
   const [preview, setPreview] = useState('');
+  const toast = useToast();
+  const { mutateAsync: upload } = useStorageUpload({
+    uploadWithoutDirectory: true,
+    onProgress(event: { progress: number; total: number }) {
+      setProgress(Math.max(0, event.progress / event.total - 0.01));
+    },
+  });
 
   const handleCompressedUpload = async (file: any) => {
     setProgress(0);
     setUploadDone(false);
     try {
-      const _added = await client.add(file, {
-        progress: (prog) => {
-          setProgress(prog / file.size);
-        },
+      const _added = await upload({
+        data: [new File([file], 'me.jpeg')],
       });
-      saveData(`https://gateway.lighthouse.storage/ipfs/${_added.path}`);
+      setProgress(1);
+      saveData(
+        `https://${
+          process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID
+        }.ipfscdn.io/ipfs/${_added[0].slice(7)}`
+      );
     } catch (e: any) {
-      console.log(e.message);
+      toast({
+        title: 'Upload Error',
+        description: `${e.message}`,
+        status: 'warning',
+        position: 'top',
+        duration: 9000,
+        isClosable: true,
+      });
     }
     setUploadDone(true);
   };
@@ -393,7 +407,7 @@ export const ProfileAvatarEditor = ({ saveData, isInvalid }: any) => {
           {data?.type?.includes('image/') ? (
             <>
               <Image width="100%" borderRadius="full" src={preview} alt="" />
-              {progress != 1 && !isUploadDone && (
+              {progress !== 1 && !isUploadDone && (
                 <Flex
                   position="absolute"
                   left="0"

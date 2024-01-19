@@ -1,51 +1,29 @@
-import { Picture } from '@/assets/svg';
 import CreatableSelect from 'react-select/creatable';
 import * as Yup from 'yup';
 import {
-  TableContainer,
-  Table,
-  Th,
-  Tr,
-  Td,
-  Thead,
-  Tbody,
   Flex,
   Button,
   Input,
-  Icon,
-  MenuButton,
-  MenuList,
   Box,
-  MenuItem,
-  Menu,
-  VStack,
-  Select,
   Text,
   Center,
   Spinner,
-  Textarea,
   useMediaQuery,
-  IconButton,
   ModalOverlay,
   ModalContent,
   Modal,
   ModalBody,
-  useToast,
-  useClipboard,
   Image,
   AspectRatio,
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Stack,
-  InputGroup,
-  InputLeftAddon,
 } from '@chakra-ui/react';
 import { Field, Formik } from 'formik';
 import { useState } from 'react';
 import { UploadMeme } from './uploadWigdet';
 import { uploadDataAPI } from '@/shared/api';
-import { mutate, useSWRConfig } from 'swr';
+import { useSWRConfig } from 'swr';
 
 interface IMemeData {
   fileId: string;
@@ -318,7 +296,7 @@ export const UploadModal = ({ address }: { address: string }) => {
                               }}
                               value={values.tags}
                               styles={{
-                                control: (styles, state) => ({
+                                control: (styles) => ({
                                   ...styles,
                                   paddingBlock: '.375rem',
                                   paddingInline: '.5rem',
@@ -415,7 +393,7 @@ export const UploadModal = ({ address }: { address: string }) => {
                             borderRadius={'10px'}
                             width="100%"
                             height="100%"
-                            src={`https://gateway.lighthouse.storage/ipfs/${uploadData.fileId}`}
+                            src={`https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${uploadData.fileId}`}
                             fit="cover"
                             alt="data"
                           />
@@ -428,7 +406,7 @@ export const UploadModal = ({ address }: { address: string }) => {
                             height="100%"
                           >
                             <video
-                              src={`https://gateway.lighthouse.storage/ipfs/${uploadData.fileId}`}
+                              src={`https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${uploadData.fileId}`}
                               controls
                               style={{ maxWidth: '100%' }}
                             />

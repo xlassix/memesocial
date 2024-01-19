@@ -1,5 +1,4 @@
 import { Icon } from '@chakra-ui/react';
-import { HtmlHTMLAttributes, SVGProps } from 'react';
 
 export const World = (props: any) => {
   return (
@@ -22,7 +21,7 @@ export const SocialFacebook = (props: any) => {
       viewBox="0 0 33 32"
       {...props}
     >
-      <g clip-path="url(#SocialFacebook)">
+      <g clipPath="url(#SocialFacebook)">
         <path
           d="M27.8 0H5.4A4.8 4.8 0 0 0 .6 4.8v22.4A4.8 4.8 0 0 0 5.4 32h22.4a4.8 4.8 0 0 0 4.8-4.8V4.8A4.8 4.8 0 0 0 27.8 0Z"
           fill="#1877F2"
@@ -65,7 +64,7 @@ export const SocialX = (props: any) => {
       viewBox="0 0 33 32"
       {...props}
     >
-      <g clip-path="url(#social)">
+      <g clipPath="url(#social)">
         <mask
           id="b"
           style={{ maskType: 'luminance' }}
@@ -105,7 +104,7 @@ export const SocialReddit = (props: any) => {
       viewBox="0 0 32 32"
       {...props}
     >
-      <g clip-path="url(#Reddita)" {...props}>
+      <g clipPath="url(#Reddita)" {...props}>
         <path
           d="M27.2 0H4.8A4.8 4.8 0 0 0 0 4.8v22.4A4.8 4.8 0 0 0 4.8 32h22.4a4.8 4.8 0 0 0 4.8-4.8V4.8A4.8 4.8 0 0 0 27.2 0Z"
           fill="#F40"
@@ -121,16 +120,16 @@ export const SocialReddit = (props: any) => {
         <path
           d="m16 12.25 1.44-6.31 4.56.93"
           stroke="#fff"
-          stroke-width=".97"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth=".97"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M11.94 22.44c2.06 1.56 6.06 1.62 8.12 0"
           stroke="#F40"
-          stroke-width=".79"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth=".79"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M11.94 19.88a1.94 1.94 0 1 0 0-3.88 1.94 1.94 0 0 0 0 3.88ZM20.06 19.88a1.94 1.94 0 1 0 0-3.88 1.94 1.94 0 0 0 0 3.88Z"
@@ -183,7 +182,7 @@ export const CopyLink = (props: any) => {
       viewBox="0 0 33 32"
       {...props}
     >
-      <g clip-path="url(#CopyLink)">
+      <g clipPath="url(#CopyLink)">
         <path
           d="M16.2.06a15.94 15.94 0 1 1 0 31.88 15.94 15.94 0 0 1 0-31.88Z"
           fill="#53E261"
@@ -401,15 +400,15 @@ export const ProfileUploadPlaceHolder = (props: any) => {
         x="3"
         y="3"
         stroke="#F9FAFB"
-        stroke-width="6"
+        strokeWidth="6"
         rx="20"
       />
-      <g clip-path="url(#ProfileUploadPlaceHoldera)">
+      <g clipPath="url(#ProfileUploadPlaceHoldera)">
         <path
           stroke="#475467"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.667"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.667"
           d="M26.333 26.333 23 23m0 0-3.333 3.333M23 23v7.5m6.992-2.175A4.167 4.167 0 0 0 28 20.5h-1.05a6.666 6.666 0 1 0-11.45 6.083"
         />
       </g>
@@ -432,9 +431,9 @@ export const ProfilePlaceOlder = (props: any) => {
     >
       <rect width="48" height="48" fill="#CAC2FF" rx="24" />
       <g filter="url(#ProfilePlaceOldera)">
-        <g clip-path="url(#ProfilePlaceOlderb)">
+        <g clipPath="url(#ProfilePlaceOlderb)">
           <rect width="48" height="48" fill="#CAC2FF" rx="24" />
-          <g filter="url(#ProfilePlaceOlderc)" shape-rendering="crispEdges">
+          <g filter="url(#ProfilePlaceOlderc)" shapeRendering="crispEdges">
             <ellipse
               cx="24"
               cy="45.6"
@@ -447,7 +446,7 @@ export const ProfilePlaceOlder = (props: any) => {
               d="M42.7 45.6c0 3.784-2.044 7.247-5.424 9.782C33.896 57.917 29.204 59.5 24 59.5c-5.204 0-9.896-1.583-13.277-4.118C7.343 52.847 5.3 49.384 5.3 45.6s2.044-7.248 5.423-9.782C14.104 33.283 18.797 31.7 24 31.7c5.204 0 9.897 1.583 13.276 4.118 3.38 2.535 5.424 5.998 5.424 9.782Z"
             />
           </g>
-          <g filter="url(#ProfilePlaceOlderf)" shape-rendering="crispEdges">
+          <g filter="url(#ProfilePlaceOlderf)" shapeRendering="crispEdges">
             <circle cx="24" cy="19.2" r="9.6" fill="url(#ProfilePlaceOlderg)" />
             <circle
               cx="24"
@@ -631,14 +630,14 @@ export const LogoWithConnect = (props: any) => {
       <path
         fill="url(#a)"
         stroke="#fff"
-        stroke-width=".605"
+        strokeWidth=".605"
         d="M43.697 37.072c0 4.846-3.896 8.77-8.697 8.77-4.801 0-8.698-3.924-8.698-8.77 0-4.845 3.897-8.77 8.698-8.77s8.697 3.925 8.697 8.77Z"
       />
       <path
         fill="#fff"
-        fill-rule="evenodd"
+        fillRule="evenodd"
         d="M34.864 42.07a.379.379 0 0 0 .359-.003l1.784-.961c.506-.272.902-.576 1.21-.93a4.175 4.175 0 0 0 1.033-2.77l-.021-3.347a.911.911 0 0 0-.625-.854l-3.318-1.123a.937.937 0 0 0-.616.004l-3.306 1.162a.913.913 0 0 0-.614.863l.021 3.344a4.176 4.176 0 0 0 1.07 2.76c.312.348.711.648 1.223.915l1.8.94Zm-.472-3.934a.378.378 0 0 0 .268.106.379.379 0 0 0 .266-.11l1.95-1.938a.366.366 0 0 0-.003-.523.383.383 0 0 0-.534.003l-1.685 1.673-.69-.668a.383.383 0 0 0-.533.003.366.366 0 0 0 .003.524l.958.93Z"
-        clip-rule="evenodd"
+        clipRule="evenodd"
       />
       <defs>
         <linearGradient
@@ -736,7 +735,7 @@ export const LogoFavicon = (props: any) => {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <g clip-path="url(#clip0_200_1719)">
+      <g clipPath="url(#clip0_200_1719)">
         <rect width="40" height="40" rx="13" fill="#6E3FF3" />
         <path d="M40 0H0V40H40V0Z" fill="#6E3FF3" />
         <path

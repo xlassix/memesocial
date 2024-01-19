@@ -21,13 +21,13 @@ export default function apiHandler(
 }
 
 export const uploadDataAPI = async (body: any) => {
-  return await apiHandler('/ai', body, 'POST');
+  return apiHandler('/ai', body, 'POST');
 };
 
 export const signUpAPI = async (body: { [key: string]: string }) => {
-  return await apiHandler('/auth/', body, 'POST');
+  return apiHandler('/auth/', body, 'POST');
 };
 
 export const UpdateUserAPI = async (body: { [key: string]: string }) => {
-  return await apiHandler('/user', body, 'POST');
+  return apiHandler('/user', body, 'POST');
 };

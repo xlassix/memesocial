@@ -23,22 +23,16 @@ import {
   Textarea,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import {
-  MediaRenderer,
-  useConnectionStatus,
-  useDisconnect,
-  useEmbeddedWallet,
-  useWallet,
-} from '@thirdweb-dev/react';
+import { useEmbeddedWallet, useWallet } from '@thirdweb-dev/react';
 import { CustomInput } from './uploadModal';
 import { buildSignMessage } from '@/lib/helper';
 import { IUser, useMe } from '@/shared/hooks';
-import apiHandler, { UpdateUserAPI, signUpAPI } from '@/shared/api';
+import { UpdateUserAPI, signUpAPI } from '@/shared/api';
 import { useSWRConfig } from 'swr';
 import { Field, Formik } from 'formik';
-import * as Yup from 'yup';
 import { CustomInputWithPrefix } from './utils/helper';
 import { ProfileAvatarEditor } from './uploadWigdet';
+import * as Yup from 'yup';
 
 type LoginStatus =
   | 'init'
@@ -47,191 +41,6 @@ type LoginStatus =
   | 'awaiting_auth_sign'
   | 'email_verification'
   | 'done';
-export const SignUp = () => {
-  const { mutate } = useSWRConfig();
-  const [loginState, setLoginState] = useState<LoginStatus>('init');
-  const [email, setEmail] = useState<string>('');
-  const [error, setError] = useState<string>('');
-  const [isOpen, setModalStatus] = useState(false);
-  const { userData, isLoading } = useMe();
-  const { connect } = useEmbeddedWallet();
-
-  const signInWithSocial = async (strategy: 'google' | 'apple') => {
-    try {
-      setLoginState('processing');
-      const personalWallet = await connect({
-        strategy: strategy,
-      });
-      const address = await personalWallet.getAddress();
-      setLoginState('awaiting_auth_sign');
-      const sig = await personalWallet.signMessage(
-        buildSignMessage(address.toLowerCase(), userData?.time)
-      );
-
-      const { user }: { user?: IUser } = await signUpAPI({
-        address,
-        signature: sig,
-        time: userData.time,
-      });
-      mutate('/auth');
-      if (user?.profileDescription) {
-        setModalStatus(false);
-      } else {
-        setLoginState('done');
-      }
-    } catch (e: any) {
-      setLoginState('init');
-      console.log(e, e?.response?.data?.errors);
-      setError(e?.response?.data?.errors[0] ?? e.message);
-    }
-  };
-
-  const emailSignInDone = async (address: string, sig: string) => {
-    const { user }: { user?: IUser } = await signUpAPI({
-      address,
-      signature: sig,
-      time: userData.time,
-    });
-    mutate('/auth');
-    if (user?.profileDescription) {
-      setModalStatus(false);
-    } else {
-      setLoginState('done');
-    }
-  };
-
-  return (
-    <>
-      <Button
-        fontWeight="500"
-        fontStyle={'italic'}
-        variant={'primary'}
-        onClick={() => setModalStatus(true)}
-      >
-        SignUp/In
-      </Button>
-      <Modal
-        isOpen={isOpen}
-        onClose={() =>
-          ['init', 'done'].includes(loginState) || error
-            ? setModalStatus(false)
-            : null
-        }
-        isCentered={true}
-        size={'sm'}
-      >
-        <ModalOverlay backdropFilter="blur(4px) hue-rotate(0deg)" />
-        <ModalContent
-          bg="white"
-          padding="1rem 0"
-          borderRadius={'1rem'}
-          border="1px solid #F6F8FA"
-        >
-          <ModalBody>
-            <Box>
-              <Center marginY={'20px'}>
-                {error ? (
-                  <LogoWithConnect height="3rem" />
-                ) : (
-                  <LogoFavicon height="3rem" />
-                )}
-              </Center>
-              {error ? (
-                <Box>
-                  <Text textAlign={'center'} padding="0 1rem 1rem 1rem">
-                    {error}
-                  </Text>
-                  <Button
-                    w="100%"
-                    fontWeight={'500'}
-                    fontSize={'14px'}
-                    lineHeight={1.5}
-                    variant={'primary'}
-                    onClick={() => setError('')}
-                    mb="0.5rem"
-                  >
-                    Try Again
-                  </Button>
-                </Box>
-              ) : [
-                  'sending_email',
-                  'processing',
-                  'awaiting_auth_sign',
-                ].includes(loginState) || isLoading ? (
-                <Center bg="white" p="4rem 2rem" flexDirection="row">
-                  <Spinner
-                    thickness="4px"
-                    speed="0.65s"
-                    emptyColor="purple.500"
-                    color="white"
-                    size="xl"
-                  />
-                  <Text>{loginState}</Text>
-                </Center>
-              ) : (
-                <>
-                  {loginState === 'done' ? (
-                    <UserInfoForm
-                      setError={setError}
-                      setLoginState={setLoginState}
-                      done={() => {
-                        mutate('/auth');
-                        setModalStatus(false);
-                      }}
-                    />
-                  ) : (
-                    <>
-                      {loginState === 'email_verification' ? null : (
-                        <>
-                          <SocialLoginButton
-                            strategy="google"
-                            signInWithSocial={() => signInWithSocial('google')}
-                          />
-                          <SocialLoginButton
-                            strategy="apple"
-                            signInWithSocial={() => signInWithSocial('apple')}
-                          />
-                          <Center color={'#525866'}>
-                            <Divider />
-                            <Text px="1rem">OR</Text>
-                            <Divider />
-                          </Center>
-                        </>
-                      )}
-                      <EmailSignIn
-                        emailSignInDone={emailSignInDone}
-                        time={userData?.time}
-                        loginState={loginState}
-                        setLoginState={setLoginState}
-                        email={email}
-                        setError={setError}
-                        setEmail={setEmail}
-                      />
-                    </>
-                  )}
-                </>
-              )}
-              {loginState !== 'done' ? (
-                <Text
-                  textAlign={'center'}
-                  width="90%"
-                  margin={'auto'}
-                  fontWeight={'500'}
-                  fontSize={'14px'}
-                  lineHeight={1.5}
-                  color="#868C98"
-                >
-                  By continuing you agree to MemeSocial&apos;s Terms of Service
-                  and Privacy Policy
-                </Text>
-              ) : null}
-            </Box>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-    </>
-  );
-};
 
 type SocialLoginProps = {
   strategy: 'google' | 'apple';
@@ -277,7 +86,7 @@ export const UserInfoForm = ({
             onSubmit={async (values) => {
               try {
                 setLoginState('processing');
-                const user = await UpdateUserAPI({ ...data, ...values });
+                await UpdateUserAPI({ ...data, ...values });
                 setLoginState('init');
                 done();
               } catch (e: any) {
@@ -286,14 +95,7 @@ export const UserInfoForm = ({
               }
             }}
           >
-            {({
-              handleSubmit,
-              errors,
-              touched,
-              values,
-              setFieldTouched,
-              setFieldValue,
-            }) => (
+            {({ handleSubmit, errors, touched, setFieldValue }) => (
               <>
                 <form onSubmit={handleSubmit}>
                   <FormControl
@@ -325,7 +127,7 @@ export const UserInfoForm = ({
                     onClick={async () => {
                       try {
                         setLoginState('processing');
-                        const user = await UpdateUserAPI(data);
+                        await UpdateUserAPI(data);
                         setLoginState('init');
                         done();
                       } catch (e: any) {
@@ -364,14 +166,7 @@ export const UserInfoForm = ({
             });
           }}
         >
-          {({
-            handleSubmit,
-            errors,
-            touched,
-            values,
-            setFieldTouched,
-            setFieldValue,
-          }) => (
+          {({ handleSubmit, errors, touched }) => (
             <>
               <form onSubmit={handleSubmit}>
                 <Flex gap={'1rem'} mb="0.5rem" flexFlow="row wrap">
@@ -531,11 +326,11 @@ export const SocialLoginButton = ({
       padding={'1rem'}
       marginBottom="1rem"
       display="inline-flex"
-      color={strategy == 'google' ? 'white' : 'black'}
-      background={strategy != 'google' ? 'white' : 'black'}
+      color={strategy === 'google' ? 'white' : 'black'}
+      background={strategy !== 'google' ? 'white' : 'black'}
       alignItems="center"
       justifyContent="center"
-      border={strategy != 'google' ? '1px solid black' : 'none'}
+      border={strategy !== 'google' ? '1px solid black' : 'none'}
       borderRadius="8px"
       onClick={signInWithSocial}
       _focus={{
@@ -543,10 +338,10 @@ export const SocialLoginButton = ({
       }}
     >
       <span style={{ marginRight: '10px' }}>
-        {strategy == 'google' ? (
+        {strategy === 'google' ? (
           <SocialGoogle height="24px" width="24px" />
         ) : null}
-        {strategy == 'apple' ? (
+        {strategy === 'apple' ? (
           <SocialApple height="24px" width="24px" />
         ) : null}
       </span>{' '}
@@ -590,7 +385,6 @@ export default function EmailSignIn({
     verificationCode: string
   ) => {
     try {
-      console.log({ email, verificationCode });
       if (!email || !verificationCode) {
         alert('Please enter an verification code');
         // setLoginState('init');
@@ -627,18 +421,10 @@ export default function EmailSignIn({
             email: Yup.string(),
           })}
           onSubmit={async (values) => {
-            console.log({ values, email });
             await handleEmailVerification(values.email, values.code);
           }}
         >
-          {({
-            handleSubmit,
-            errors,
-            touched,
-            values,
-            setFieldTouched,
-            setFieldValue,
-          }) => (
+          {({ handleSubmit, errors, touched }) => (
             <form onSubmit={handleSubmit}>
               <FormControl
                 isInvalid={Boolean(errors.code) && Boolean(touched?.code)}
@@ -698,14 +484,7 @@ export default function EmailSignIn({
           await handleEmailEntered(values.email);
         }}
       >
-        {({
-          handleSubmit,
-          errors,
-          touched,
-          values,
-          setFieldTouched,
-          setFieldValue,
-        }) => (
+        {({ handleSubmit, errors, touched }) => (
           <form onSubmit={handleSubmit}>
             <FormControl
               isInvalid={Boolean(errors.email) && Boolean(touched?.email)}
@@ -746,3 +525,188 @@ export default function EmailSignIn({
     </>
   );
 }
+
+export const SignUp = () => {
+  const { mutate } = useSWRConfig();
+  const [loginState, setLoginState] = useState<LoginStatus>('init');
+  const [email, setEmail] = useState<string>('');
+  const [error, setError] = useState<string>('');
+  const [isOpen, setModalStatus] = useState(false);
+  const { userData, isLoading } = useMe();
+  const { connect } = useEmbeddedWallet();
+
+  const signInWithSocial = async (strategy: 'google' | 'apple') => {
+    try {
+      setLoginState('processing');
+      const personalWallet = await connect({
+        strategy: strategy,
+      });
+      const address = await personalWallet.getAddress();
+      setLoginState('awaiting_auth_sign');
+      const sig = await personalWallet.signMessage(
+        buildSignMessage(address.toLowerCase(), userData?.time)
+      );
+
+      const { user }: { user?: IUser } = await signUpAPI({
+        address,
+        signature: sig,
+        time: userData.time,
+      });
+      mutate('/auth');
+      if (user?.profileDescription) {
+        setModalStatus(false);
+      } else {
+        setLoginState('done');
+      }
+    } catch (e: any) {
+      setLoginState('init');
+      setError(e?.response?.data?.errors[0] ?? e.message);
+    }
+  };
+
+  const emailSignInDone = async (address: string, sig: string) => {
+    const { user }: { user?: IUser } = await signUpAPI({
+      address,
+      signature: sig,
+      time: userData.time,
+    });
+    mutate('/auth');
+    if (user?.profileDescription) {
+      setModalStatus(false);
+    } else {
+      setLoginState('done');
+    }
+  };
+
+  return (
+    <>
+      <Button
+        fontWeight="500"
+        fontStyle={'italic'}
+        variant={'primary'}
+        onClick={() => setModalStatus(true)}
+      >
+        SignUp/In
+      </Button>
+      <Modal
+        isOpen={isOpen}
+        onClose={() =>
+          ['init', 'done'].includes(loginState) || error
+            ? setModalStatus(false)
+            : null
+        }
+        isCentered={true}
+        size={'sm'}
+      >
+        <ModalOverlay backdropFilter="blur(4px) hue-rotate(0deg)" />
+        <ModalContent
+          bg="white"
+          padding="1rem 0"
+          borderRadius={'1rem'}
+          border="1px solid #F6F8FA"
+        >
+          <ModalBody>
+            <Box>
+              <Center marginY={'20px'}>
+                {error ? (
+                  <LogoWithConnect height="3rem" />
+                ) : (
+                  <LogoFavicon height="3rem" />
+                )}
+              </Center>
+              {error ? (
+                <Box>
+                  <Text textAlign={'center'} padding="0 1rem 1rem 1rem">
+                    {error}
+                  </Text>
+                  <Button
+                    w="100%"
+                    fontWeight={'500'}
+                    fontSize={'14px'}
+                    lineHeight={1.5}
+                    variant={'primary'}
+                    onClick={() => setError('')}
+                    mb="0.5rem"
+                  >
+                    Try Again
+                  </Button>
+                </Box>
+              ) : [
+                  'sending_email',
+                  'processing',
+                  'awaiting_auth_sign',
+                ].includes(loginState) || isLoading ? (
+                <Center bg="white" p="4rem 2rem" flexDirection="row">
+                  <Spinner
+                    thickness="4px"
+                    speed="0.65s"
+                    emptyColor="purple.500"
+                    color="white"
+                    size="xl"
+                  />
+                  <Text>{loginState}</Text>
+                </Center>
+              ) : (
+                <>
+                  {loginState === 'done' ? (
+                    <UserInfoForm
+                      setError={setError}
+                      setLoginState={setLoginState}
+                      done={() => {
+                        mutate('/auth');
+                        setModalStatus(false);
+                      }}
+                    />
+                  ) : (
+                    <>
+                      {loginState === 'email_verification' ? null : (
+                        <>
+                          <SocialLoginButton
+                            strategy="google"
+                            signInWithSocial={() => signInWithSocial('google')}
+                          />
+                          <SocialLoginButton
+                            strategy="apple"
+                            signInWithSocial={() => signInWithSocial('apple')}
+                          />
+                          <Center color={'#525866'}>
+                            <Divider />
+                            <Text px="1rem">OR</Text>
+                            <Divider />
+                          </Center>
+                        </>
+                      )}
+                      <EmailSignIn
+                        emailSignInDone={emailSignInDone}
+                        time={userData?.time}
+                        loginState={loginState}
+                        setLoginState={setLoginState}
+                        email={email}
+                        setError={setError}
+                        setEmail={setEmail}
+                      />
+                    </>
+                  )}
+                </>
+              )}
+              {loginState !== 'done' ? (
+                <Text
+                  textAlign={'center'}
+                  width="90%"
+                  margin={'auto'}
+                  fontWeight={'500'}
+                  fontSize={'14px'}
+                  lineHeight={1.5}
+                  color="#868C98"
+                >
+                  By continuing you agree to MemeSocial&apos;s Terms of Service
+                  and Privacy Policy
+                </Text>
+              ) : null}
+            </Box>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};

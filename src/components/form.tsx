@@ -1,10 +1,4 @@
-import {
-  Icon,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  InputRightElement,
-} from '@chakra-ui/react';
+import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
 
 export const SearchInput = (props: any) => {
   return (

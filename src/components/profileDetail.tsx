@@ -1,4 +1,4 @@
-import { Box, Flex, Image, Text } from '@chakra-ui/react';
+import { Box, Flex, Image, Text, useToast } from '@chakra-ui/react';
 import {
   ShareIcon,
   SocialInstagram,
@@ -6,7 +6,6 @@ import {
   SocialXClear,
 } from '@/assets/svg';
 import { IUserDetails } from '@/shared/hooks';
-import { LineShareButton } from 'next-share';
 
 export const ProfileDetails = ({
   isLargerThan768,
@@ -17,6 +16,7 @@ export const ProfileDetails = ({
   isLoading: boolean;
   user: IUserDetails;
 }) => {
+  const toast = useToast();
   return (
     <Box
       sx={
@@ -93,7 +93,11 @@ export const ProfileDetails = ({
             padding={'0.5rem'}
           >
             {user?.twitter ? (
-              <a href={`https://x.com/${user?.twitter}`} target="_blank">
+              <a
+                href={`https://x.com/${user?.twitter}`}
+                target="_blank"
+                rel="noreferrer"
+              >
                 <SocialXClear height="2.5rem" padding="0.25rem" />
               </a>
             ) : null}
@@ -101,12 +105,17 @@ export const ProfileDetails = ({
               <a
                 href={`https://instagram.com/${user?.instagram}`}
                 target="_blank"
+                rel="noreferrer"
               >
                 <SocialInstagram height="2.5rem" padding="0.25rem" />
               </a>
             ) : null}
             {user?.tiktok ? (
-              <a href={`https://tiktok.com/@${user?.tiktok}`} target="_blank">
+              <a
+                href={`https://tiktok.com/@${user?.tiktok}`}
+                target="_blank"
+                rel="noreferrer"
+              >
                 <SocialTikTok height="2.5rem" padding="0.25rem" />
               </a>
             ) : null}
@@ -118,8 +127,11 @@ export const ProfileDetails = ({
                     text: `Checkout ${user.twitter}'s Profile`,
                     url: `https://memesocial.vercel.app/user/${user.address}`,
                   });
-                } catch (e) {
-                  console.log(e);
+                } catch (e: any) {
+                  toast({
+                    status: 'error',
+                    description: `${e.message}`,
+                  });
                 }
               }}
             >

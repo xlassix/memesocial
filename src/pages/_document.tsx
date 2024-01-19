@@ -1,12 +1,11 @@
 /* eslint-disable react/self-closing-comp */
 import { Html, Head, Main, NextScript } from 'next/document';
 
-
 const Document = () => {
   return (
     <Html lang="en">
       <Head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="theme-color" content="#6E3FF3" />
         <meta
           name="description"

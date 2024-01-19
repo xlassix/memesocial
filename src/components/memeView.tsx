@@ -48,45 +48,45 @@ function getFileExtension(fileType: string) {
   return ''; // Return empty string if the type does not have a subtype
 }
 
+const DownloadLink = async (viewMeme: ISearchMeme, toast: any) => {
+  try {
+    const url = `https://${
+      process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID
+    }.ipfscdn.io/ipfs/${viewMeme?.fileId}?filename=${
+      viewMeme?.title
+    }.${getFileExtension(viewMeme?.type ?? '')}`;
+    const response = await fetch(url);
+    if (!response.ok)
+      throw new Error(`Failed to download file: ${response.statusText}`);
+
+    const blob = await response.blob();
+    const blobUrl = window.URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = `${viewMeme?.title}.${getFileExtension(
+      viewMeme?.type ?? ''
+    )}`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(blobUrl);
+  } catch (error: any) {
+    toast({
+      title: 'Download error',
+      description: `${error?.message}`,
+      status: 'error',
+      colorScheme: 'whatsapp',
+      position: 'top',
+      duration: 9000,
+      isClosable: true,
+    });
+  }
+};
 export const MemeView = ({ isLoading, data }: Props) => {
   const [viewMeme, setViewAbleMeme] = useState<ISearchMeme | null>(null);
   const toast = useToast();
 
-  const DownloadLink = async (viewMeme: ISearchMeme) => {
-    try {
-      const url = `https://${
-        process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID
-      }.ipfscdn.io/ipfs/${viewMeme?.fileId}?filename=${
-        viewMeme?.title
-      }.${getFileExtension(viewMeme?.type ?? '')}`;
-      const response = await fetch(url);
-      if (!response.ok)
-        throw new Error(`Failed to download file: ${response.statusText}`);
-
-      const blob = await response.blob();
-      const blobUrl = window.URL.createObjectURL(blob);
-
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = `${viewMeme?.title}.${getFileExtension(
-        viewMeme?.type ?? ''
-      )}`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(blobUrl);
-    } catch (error: any) {
-      toast({
-        title: 'Download error',
-        description: `${error?.message}`,
-        status: 'error',
-        colorScheme: 'whatsapp',
-        position: 'top',
-        duration: 9000,
-        isClosable: true,
-      });
-    }
-  };
   return (
     <>
       {isLoading ? (
@@ -242,7 +242,7 @@ export const MemeView = ({ isLoading, data }: Props) => {
                   gap="0.5rem"
                   boxShadow="0px 2px 4px 0px #1B1C1D0A"
                   border="1.03px solid #F6F8FA"
-                  onClick={() => viewMeme && DownloadLink(viewMeme)}
+                  onClick={() => viewMeme && DownloadLink(viewMeme, toast)}
                 >
                   <Download height="2.25rem" />
                   <Text fontSize={'0.8rem'} textAlign={'center'}>
@@ -517,7 +517,7 @@ export const MemeViewUser = ({ isLoading, data }: Props) => {
                   gap="0.5rem"
                   boxShadow="0px 2px 4px 0px #1B1C1D0A"
                   border="1.03px solid #F6F8FA"
-                  onClick={() => viewMeme && DownloadLink(viewMeme)}
+                  onClick={() => viewMeme && DownloadLink(viewMeme, toast)}
                 >
                   <Download height="2.25rem" />
                   <Text fontSize={'0.8rem'} textAlign={'center'}>

@@ -493,6 +493,7 @@ export const MemeViewUser = ({ isLoading, data }: Props) => {
                   <video
                     src={`https://${process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID}.ipfscdn.io/ipfs/${viewMeme?.fileId}`}
                     controls
+                    onEnded={() => {}}
                     style={{
                       maxWidth: '100%',
                       maxHeight: '70vh',

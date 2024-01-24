@@ -44,6 +44,7 @@ const Nav = (props: any) => {
           caretColor: 'transparent',
         }}
         fontWeight="700"
+        position={'sticky'}
         borderBottom="1px solid #E2E4E9"
       >
         <LogoSVG height="2rem" onClick={() => router.push('/')} />

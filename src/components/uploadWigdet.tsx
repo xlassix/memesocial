@@ -79,8 +79,8 @@ export const UploadMeme = ({ saveData, isInvalid }: Props) => {
         let quality = 1; // Start with the highest quality
         let compressedImageUrl = canvas.toDataURL('image/jpeg', quality);
 
-        // Check if the size is greater than 100KB
-        while (getBase64Size(compressedImageUrl) > 100 * 1024 && quality > 0) {
+        // Check if the size is greater than 48KB
+        while (getBase64Size(compressedImageUrl) > 48 * 1024 && quality > 0) {
           quality -= 0.1; // Decrease quality by 10%
           compressedImageUrl = canvas.toDataURL('image/jpeg', quality);
         }

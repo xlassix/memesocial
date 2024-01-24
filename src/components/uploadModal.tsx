@@ -18,6 +18,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  useToast,
 } from '@chakra-ui/react';
 import { Field, Formik } from 'formik';
 import { useState } from 'react';
@@ -74,6 +75,7 @@ export const UploadModal = ({ address }: { address: string }) => {
   const [isProcessing, setProcessing] = useState(false);
   const [uploadData, setUploadData] = useState<IMemeData | null>(null);
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
+  const toast = useToast();
 
   return (
     <>
@@ -131,7 +133,13 @@ export const UploadModal = ({ address }: { address: string }) => {
                     setProcessing(false);
                     mutate(`/ai?search=${''}`);
                     mutate(`/user?search=${''}`);
-                  } catch {
+                  } catch (e: any) {
+                    toast({
+                      title: 'error',
+                      status: 'error',
+                      isClosable: true,
+                      description: `${e?.response?.data ?? e.message}`,
+                    });
                     setProcessing(false);
                   }
                 }}

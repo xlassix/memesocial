@@ -6,6 +6,7 @@ import {
   SocialReddit,
   SocialX,
 } from '@/assets/svg';
+import apiHandler from '@/shared/api';
 import { ISearchMeme } from '@/shared/hooks';
 import {
   AspectRatio,
@@ -82,6 +83,9 @@ const DownloadLink = async (viewMeme: ISearchMeme, toast: any) => {
       isClosable: true,
     });
   }
+  await apiHandler('/download', { cid: viewMeme.fileId }, 'POST').catch(
+    () => null
+  );
 };
 export const MemeView = ({ isLoading, data }: Props) => {
   const [viewMeme, setViewAbleMeme] = useState<ISearchMeme | null>(null);

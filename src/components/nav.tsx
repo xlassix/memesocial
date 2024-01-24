@@ -1,5 +1,14 @@
 import React from 'react';
-import { Button, Image, useMediaQuery , Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
+import {
+  Button,
+  Image,
+  useMediaQuery,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Text,
+} from '@chakra-ui/react';
 import { Box, Flex } from '@chakra-ui/layout';
 import { LogoSVG } from '../assets/svg';
 import { useRouter } from 'next/navigation';
@@ -8,7 +17,7 @@ import { SearchInput } from './form';
 import { UploadModal } from './uploadModal';
 import { useDisconnect } from '@thirdweb-dev/react';
 import { SignUp } from './signup';
-import { useMe } from '@/shared/hooks';
+import { useMe, useWalletBalance } from '@/shared/hooks';
 import apiHandler from '@/shared/api';
 import { useSWRConfig } from 'swr';
 
@@ -18,6 +27,7 @@ const Nav = (props: any) => {
   const router = useRouter();
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
   const { userData } = useMe();
+  const { reward, isLoading } = useWalletBalance();
 
   return (
     <>
@@ -62,12 +72,38 @@ const Nav = (props: any) => {
             </Formik>
           </Box>
         ) : null}
-        <Flex align={'center'} gap="1rem" fontStyle={'italic'}>
+        <Flex alignItems={'stretch'} gap="0.25rem" fontStyle={'italic'}>
           {userData?.user?.profileDescription && userData?.user?.address ? (
-            <Flex>
+            <>
+              {!isLoading ? (
+                <Flex
+                  height={'40px'}
+                  rounded="0.5rem"
+                  padding="0.4rem 1rem"
+                  border="1px solid #F6F8FA"
+                  mr="1rem"
+                  alignItems={'center'}
+                  justifyContent={'center'}
+                  boxShadow="0px 16px 32px -12px #585C5F1A"
+                  background="linear-gradient(0deg, #F6F8FA, #F6F8FA),linear-gradient(0deg, #FFFFFF, #FFFFFF)"
+                >
+                  <Image src={'./crown.png'} h="18px" w="18px" alt={'crown'} />
+                  <Text
+                    ml="0.25rem"
+                    color="#2B1664"
+                    fontWeight="800"
+                    fontStyle="italic"
+                    fontSize="17px"
+                    lineHeight={1.5}
+                  >
+                    {reward?.balance}MEMT
+                  </Text>
+                </Flex>
+              ) : null}
               <UploadModal address={userData?.user?.address} />
               <Menu closeOnSelect={true}>
                 <MenuButton
+                  height={'40px'}
                   as={Button}
                   padding={'0 0 0 1rem'}
                   bg="transparent !important"
@@ -77,8 +113,9 @@ const Nav = (props: any) => {
                   <Flex>
                     {userData?.user?.avatar !== null ? (
                       <Image
+                        border="1px solid #CAC2FF"
                         borderRadius="8px"
-                        w="2.75rem"
+                        w="2.5rem"
                         aspectRatio={'1 / 1'}
                         objectFit="cover"
                         alt=""
@@ -110,38 +147,6 @@ const Nav = (props: any) => {
                   >
                     Profile
                   </MenuItem>
-                  {/* <MenuItem
-                    px="1rem"
-                    textTransform={'uppercase'}
-                    fontWeight={'900'}
-                    color={'#525866'}
-                    _hover={{
-                      px: "1rem",
-                      color: '#0A0D14',
-                      bg: 'white',
-                      border: '1px solid #EEEBFF',
-                      boxShadow: '0px 24px 56px -4px #585C5F29',
-                    }}
-                    fontSize={'1rem'}
-                  >
-                    Why We exist
-                  </MenuItem>
-                  <MenuItem
-                    px="1rem"
-                    textTransform={'uppercase'}
-                    fontWeight={'900'}
-                    color={'#525866'}
-                    _hover={{
-                      px: "1rem",
-                      color: '#0A0D14',
-                      bg: 'white',
-                      border: '1px solid #EEEBFF',
-                      boxShadow: '0px 24px 56px -4px #585C5F29',
-                    }}
-                    fontSize={'1rem'}
-                  >
-                    The Clowns Behind this
-                  </MenuItem> */}
                   <MenuItem
                     px="1rem"
                     textTransform={'uppercase'}
@@ -168,7 +173,7 @@ const Nav = (props: any) => {
                   </MenuItem>
                 </MenuList>
               </Menu>
-            </Flex>
+            </>
           ) : (
             <SignUp />
           )}

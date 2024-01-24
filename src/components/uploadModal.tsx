@@ -79,10 +79,11 @@ export const UploadModal = ({ address }: { address: string }) => {
     <>
       <Button
         fontWeight="500"
-        flexBasis={'85%'}
         fontStyle={'italic'}
+        textAlign={'center'}
         variant={'primaryOutline'}
         onClick={() => setModalStatus(true)}
+        height={'40px'}
       >
         Upload Meme
       </Button>

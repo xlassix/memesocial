@@ -115,3 +115,15 @@ export const useMe = (payload?: ILogin) => {
     error,
   };
 };
+
+export const useWalletBalance = () => {
+  const { data, error } = useSWR(`/wallet`, (url) =>
+    apiHandler(url, '', 'GET')
+  );
+
+  return {
+    reward: data as { balance: number },
+    isLoading: !data && !error,
+    error,
+  };
+};

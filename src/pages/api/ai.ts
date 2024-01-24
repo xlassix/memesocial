@@ -226,7 +226,7 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
               ? processed.description
               : data.choices[0].message.content.toLowerCase(),
             url: processed.fileURL,
-            tags: processed.tags.map((e) => e.label.toLowerCase()).join(''),
+            tags: processed.tags.map((e) => e.label.toLowerCase()).join(';'),
             title: processed.title,
             type: processed.fileType,
           },

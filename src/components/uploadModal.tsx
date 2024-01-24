@@ -373,7 +373,7 @@ export const UploadModal = ({ address }: { address: string }) => {
                   <Text>Processing</Text>
                 </Center>
               ) : (
-                <Box minH="40vh">
+                <Box minH="20vh">
                   <Text
                     color="purple.500"
                     textAlign="center"

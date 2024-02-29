@@ -138,7 +138,7 @@ export const UploadModal = ({ address }: { address: string }) => {
                       title: 'error',
                       status: 'error',
                       isClosable: true,
-                      description: `${e?.response?.data ?? e.message}`,
+                      description: e?.response?.data ?? e.message,
                     });
                     setProcessing(false);
                   }

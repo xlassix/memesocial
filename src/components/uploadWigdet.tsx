@@ -116,7 +116,6 @@ export const UploadMeme = ({ saveData, isInvalid }: Props) => {
               title: 'Unacceptable Length',
               description: 'Error loading video metadata.',
               status: 'warning',
-
               position: 'top',
               duration: 9000,
               isClosable: true,

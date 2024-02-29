@@ -125,7 +125,7 @@ export const ProfileDetails = ({
                   await navigator.share({
                     title: 'MemeSocial',
                     text: `Checkout ${user.twitter}'s Profile`,
-                    url: `https://memesocial.vercel.app/user/${user.address}`,
+                    url: `https://memesocial.lol/user/${user.address}`,
                   });
                 } catch (e: any) {
                   toast({

@@ -116,6 +116,7 @@ export const UploadMeme = ({ saveData, isInvalid }: Props) => {
               title: 'Unacceptable Length',
               description: 'Error loading video metadata.',
               status: 'warning',
+
               position: 'top',
               duration: 9000,
               isClosable: true,
@@ -304,10 +305,10 @@ export const UploadMeme = ({ saveData, isInvalid }: Props) => {
             border: '1px solid #994949',
           }}
           sx={{
-            transform: 'scale(10)',
+            transform: 'scale(80)',
             opacity: 0,
           }}
-          zIndex="3"
+          zIndex="30"
           onChange={async (event: any) => {
             handleFileChange(event);
           }}

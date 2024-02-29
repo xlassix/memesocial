@@ -297,8 +297,8 @@ export const UploadModal = ({ address }: { address: string }) => {
                               options={[]}
                               isSearchable={true}
                               onChange={(item) => {
-                                setFieldTouched('tags');
                                 setFieldValue('tags', item);
+                                setFieldTouched('tags');
                               }}
                               onBlur={() => {
                                 setFieldTouched('tags');

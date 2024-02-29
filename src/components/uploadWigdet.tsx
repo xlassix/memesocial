@@ -80,7 +80,7 @@ export const UploadMeme = ({ saveData, isInvalid }: Props) => {
         let compressedImageUrl = canvas.toDataURL('image/jpeg', quality);
 
         // Check if the size is greater than 48KB
-        while (getBase64Size(compressedImageUrl) > 48 * 1024 && quality > 0) {
+        while (getBase64Size(compressedImageUrl) > 32 * 1024 && quality > 0) {
           quality -= 0.1; // Decrease quality by 10%
           compressedImageUrl = canvas.toDataURL('image/jpeg', quality);
         }
@@ -124,10 +124,10 @@ export const UploadMeme = ({ saveData, isInvalid }: Props) => {
           };
 
           video.onloadedmetadata = async () => {
-            if (video.duration > 30) {
+            if (video.duration > 60) {
               toast({
                 title: 'Unacceptable Length',
-                description: `Video is longer than 30 seconds.`,
+                description: `Video is longer than 60 seconds.`,
                 status: 'warning',
 
                 position: 'top',

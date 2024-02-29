@@ -189,9 +189,9 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
             ],
             max_tokens: 1000,
           };
-
+      let data;
       try {
-        const data = (
+        data = (
           await axios.post(
             'https://api.openai.com/v1/chat/completions',
             payload,
@@ -200,41 +200,47 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
             }
           )
         ).data as IChatCompletion;
-
-        const meme = await prismaClient.files.upsert({
-          where: {
-            fileId: processed.fileURL,
-          },
-          update: {
-            summary: data.choices[0].message.content
-              .toLowerCase()
-              .includes(
-                "i'm sorry, but i can't provide assistance with that request"
-              )
-              ? processed.description
-              : data.choices[0].message.content.toLowerCase(),
-          },
-          create: {
-            creator: processed.address,
-            fileId: processed.fileURL,
-            shortDescription: processed.description,
-            summary: data.choices[0].message.content
-              .toLowerCase()
-              .includes(
-                "i'm sorry, but i can't provide assistance with that request"
-              )
-              ? processed.description
-              : data.choices[0].message.content.toLowerCase(),
-            url: processed.fileURL,
-            tags: processed.tags.map((e) => e.label.toLowerCase()).join(';'),
-            title: processed.title,
-            type: processed.fileType,
-          },
-        });
-        return res.json(meme);
       } catch (e: any) {
-        return res.status(429).json({ error: e.response.data.error });
+        // eslint-disable-next-line no-console
+        console.log(e);
       }
+      const meme = await prismaClient.files.upsert({
+        where: {
+          fileId: processed.fileURL,
+        },
+        update: {
+          summary:
+            !data?.choices ||
+            data?.choices
+              ?.at(0)
+              ?.message?.content?.toLowerCase()
+              ?.includes(
+                "i'm sorry, but i can't provide assistance with that request"
+              )
+              ? processed.description
+              : data?.choices?.at(0)?.message?.content?.toLowerCase() ?? '',
+        },
+        create: {
+          creator: processed.address,
+          fileId: processed.fileURL,
+          shortDescription: processed.description,
+          summary:
+            !data?.choices ||
+            data?.choices
+              ?.at(0)
+              ?.message?.content?.toLowerCase()
+              ?.includes(
+                "i'm sorry, but i can't provide assistance with that request"
+              )
+              ? processed.description
+              : data?.choices?.at(0)?.message?.content?.toLowerCase() ?? '',
+          url: processed.fileURL,
+          tags: processed.tags.map((e) => e.label.toLowerCase()).join(';'),
+          title: processed.title,
+          type: processed.fileType,
+        },
+      });
+      return res.json(meme);
     } else {
       return res.json(exists);
     }
